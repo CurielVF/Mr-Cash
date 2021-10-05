@@ -22,4 +22,9 @@
         android:name="mx.itesm.cerco.proyectofinal.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_tips"
+        android:name="mx.itesm.cerco.proyectofinal.ui.tips.TipsFragment"
+        android:label="tips_fragment"
+        tools:layout="@layout/tips_fragment" />
 </navigation>
