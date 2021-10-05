@@ -1,4 +1,4 @@
-package mx.itesm.cerco.proyectofinal.ui.dashboard
+package mx.itesm.cerco.proyectofinal.ui.inicio
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import mx.itesm.cerco.proyectofinal.R
-import mx.itesm.cerco.proyectofinal.databinding.FragmentDashboardBinding
+import mx.itesm.cerco.proyectofinal.databinding.FragmentInicioBinding
 
-class DashboardFragment : Fragment() {
+class
+InicioFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
-    private var _binding: FragmentDashboardBinding? = null
+    private lateinit var inicioViewModel: InicioViewModel
+    private var _binding: FragmentInicioBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +25,14 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        inicioViewModel =
+            ViewModelProvider(this).get(InicioViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentInicioBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.textHome
+        inicioViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

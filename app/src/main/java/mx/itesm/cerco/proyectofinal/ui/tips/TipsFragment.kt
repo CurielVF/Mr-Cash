@@ -20,7 +20,7 @@ class TipsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.tips_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_tips, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

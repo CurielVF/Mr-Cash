@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="mx.itesm.cerco.proyectofinal.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:name="mx.itesm.cerco.proyectofinal.ui.inicio.InicioFragment"
+        android:label="@string/title_inicio"
+        tools:layout="@layout/fragment_inicio" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="mx.itesm.cerco.proyectofinal.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="mx.itesm.cerco.proyectofinal.ui.metas.MetasFragment"
+        android:label="@string/title_metas"
+        tools:layout="@layout/fragment_metas" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="mx.itesm.cerco.proyectofinal.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="mx.itesm.cerco.proyectofinal.ui.estadisticas.EstadisticasFragment"
+        android:label="@string/title_estadisticas"
+        tools:layout="@layout/fragment_estadisticas" />
     <fragment
         android:id="@+id/navigation_tips"
         android:name="mx.itesm.cerco.proyectofinal.ui.tips.TipsFragment"
-        android:label="tips_fragment"
-        tools:layout="@layout/tips_fragment" />
+        android:label="@string/title_tips"
+        tools:layout="@layout/fragment_tips" />
 </navigation>
