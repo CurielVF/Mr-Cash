@@ -53,6 +53,8 @@ class Login : AppCompatActivity() {
                     println("Correo: ${usuario?.email}")
                     println("Correo: ${usuario?.uid}")
                     // Lanzar otra actividad
+                    val intPrincipal = Intent(this, MainActivity::class.java)
+                    startActivity(intPrincipal)
                 }
                 RESULT_CANCELED -> {
                     println("Cancelado...")
