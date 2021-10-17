@@ -1,5 +1,6 @@
 package mx.itesm.cerco.proyectofinal.ui.metas
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -57,6 +58,11 @@ class MetasFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter= adaptadorListaMeta
         }
+
+        binding.fabAgregarMeta.setOnClickListener {
+            val intAgregarMeta =Intent(getActivity(),AgregarMeta::class.java)
+            startActivity(intAgregarMeta)
+        }
     }
 
     private fun configurarEventos() {
@@ -88,6 +94,7 @@ class MetasFragment : Fragment() {
 
         myRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                metas.clear()
                 for(registro in snapshot.children){
                     val nombre = registro.child("nombre").getValue(String::class.java)
                     val fechaLimite = registro.child("fechaLimite").getValue(String::class.java)
