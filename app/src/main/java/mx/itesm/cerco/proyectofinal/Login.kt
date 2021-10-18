@@ -13,6 +13,8 @@ import mx.itesm.cerco.proyectofinal.databinding.ActivityLoginBinding
 class Login : AppCompatActivity() {
 
     private val CODIGO_SIGNIN: Int = 500
+    private val mAuth = FirebaseAuth.getInstance()
+
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +23,22 @@ class Login : AppCompatActivity() {
         setContentView(binding.root)
 
         configurarEventos()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val usuario = mAuth.currentUser
+        if (usuario != null) {
+            println("Inicia firmado: ${usuario?.displayName}")
+            println("Correo: ${usuario?.email}")
+            println("UID: ${usuario?.uid}")
+            // Lanza la siguiente pantalla
+            val intPrincipal = Intent(this, MainActivity::class.java)
+            startActivity(intPrincipal)
+
+        } else {
+            println("Hacer SignIn...")
+        }
     }
 
     private fun autenticar() {
