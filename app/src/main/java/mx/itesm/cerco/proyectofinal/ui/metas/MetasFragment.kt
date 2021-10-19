@@ -1,13 +1,16 @@
 package mx.itesm.cerco.proyectofinal.ui.metas
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -15,6 +18,7 @@ import com.google.firebase.database.ValueEventListener
 import mx.itesm.cerco.proyectofinal.databinding.FragmentMetasBinding
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaMetas
+import java.time.LocalDate
 
 class MetasFragment : Fragment() {
 
@@ -87,12 +91,11 @@ class MetasFragment : Fragment() {
 
     fun leerMetas(): MutableList<Meta>{
         val database = FirebaseDatabase.getInstance()
-        val myRef =database.getReference("Metas")
-        //myRef.setValue(Meta("Xbox","14/09/2022",14000.0,"Entretenimiento"))
-        //myRef.setValue(Meta("Mesa","12/08/2022",30000.0,"Hogar"))
-        //myRef.setValue(Meta("PS5","14/10/2022",14000.0,"Entretenimiento"))
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val myRef =database.getReference(uid+"/Metas")
 
         myRef.addValueEventListener(object: ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
                 metas.clear()
                 for(registro in snapshot.children){
