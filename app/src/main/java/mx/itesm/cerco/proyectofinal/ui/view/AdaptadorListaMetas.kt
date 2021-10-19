@@ -1,9 +1,11 @@
 package mx.itesm.cerco.proyectofinal.ui.view
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.cerco.proyectofinal.R
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
@@ -21,6 +23,7 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: MetaViewHolder, position: Int) {
         holder.set(arrMetas[position])
     }
@@ -43,11 +46,19 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
         private val tvNombreMeta=vista.findViewById<TextView>(R.id.tvNombreMeta)
         private val tvPrecio=vista.findViewById<TextView>(R.id.tvPrecioMeta)
         private val tvFechaLimite=vista.findViewById<TextView>(R.id.tvFechaLimite)
+        private val tvAhorroNecesario=vista.findViewById<TextView>(R.id.tvAhorroNecesario)
+        private val tvDiasRestantes=vista.findViewById<TextView>(R.id.tvDiasRestantes)
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun set(meta : Meta){
+
             tvNombreMeta.text=meta.nombre
             tvPrecio.text="Costo total: " + meta.precio.toString()
             tvFechaLimite.text="Fecha de término: " + meta.fechaLimite
+            tvAhorroNecesario.text="Ahorro por semana: " + meta.ahorroNecesario
+            tvDiasRestantes.text="Quedan " + meta.periodo?.years.toString() +
+                    " años, " + meta.periodo?.months.toString() + " meses y "+
+                    meta.periodo?.days.toString() + " días"
         }
 
     }

@@ -19,6 +19,8 @@ import mx.itesm.cerco.proyectofinal.databinding.FragmentMetasBinding
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaMetas
 import java.time.LocalDate
+import java.time.Period
+import java.time.temporal.ChronoUnit
 
 class MetasFragment : Fragment() {
 
@@ -98,15 +100,18 @@ class MetasFragment : Fragment() {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
                 metas.clear()
-                for(registro in snapshot.children){
+                for(registro in snapshot.children) {
                     val nombre = registro.child("nombre").getValue(String::class.java)
                     val fechaLimite = registro.child("fechaLimite").getValue(String::class.java)
                     val precio = registro.child("precio").getValue(Double::class.java)
                     val tipo = registro.child("tipo").getValue(String::class.java)
-                    metas.add(Meta(nombre,fechaLimite,precio,tipo))
+                    val periodo = Period.between(LocalDate.now(),LocalDate.parse(fechaLimite))
+
+                    val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(),LocalDate.parse(fechaLimite))
+                    val ahorroNecesario = precio?.div(diasRestantes)
+                    metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario))
                 }
 
-                println("Metas antes: "+metas)
                 metasViewModel.setMetas(metas)
             }
             override fun onCancelled(p0: DatabaseError) {
@@ -115,7 +120,6 @@ class MetasFragment : Fragment() {
         })
 
 
-        println("Metas fin: "+metas)
         return metas
     }
 }

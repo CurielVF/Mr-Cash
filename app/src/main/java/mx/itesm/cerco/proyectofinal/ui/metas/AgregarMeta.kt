@@ -22,6 +22,7 @@ import android.widget.CalendarView
 import android.widget.CalendarView.OnDateChangeListener
 import android.widget.Toast
 import mx.itesm.cerco.proyectofinal.Login
+import java.time.Period
 
 
 class AgregarMeta : AppCompatActivity() {
@@ -50,7 +51,7 @@ class AgregarMeta : AppCompatActivity() {
         }
 
         binding.cvFechaMeta.setOnDateChangeListener(OnDateChangeListener { view, year, month, dayOfMonth ->
-            fecha = LocalDate.of(year,month,dayOfMonth)
+            fecha = LocalDate.of(year,month + 1,dayOfMonth)
         })
 
     }
@@ -69,14 +70,11 @@ class AgregarMeta : AppCompatActivity() {
             val tipo = binding.etTipoMeta.text.toString()
             val fechaLimite=fecha.toString()
             // Crea un objeto alumno con los datos capturados
-            println(fechaLimite)
             val meta = Meta(nombre,fechaLimite,monto,tipo)
 
             myRef.setValue(meta)
-            val intLogin =Intent(this,MetasFragment::class.java)
-            startActivity(intLogin)
-        } catch (e: Exception){
 
+        } catch (e: Exception){
             Toast.makeText(baseContext,"Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
         }
 
