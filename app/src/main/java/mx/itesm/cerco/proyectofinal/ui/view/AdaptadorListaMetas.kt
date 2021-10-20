@@ -62,7 +62,7 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
             tvNombreMeta.text=meta.nombre
             tvPrecio.text="Costo total: $" + String.format("%.2f", meta.precio)
             tvFechaLimite.text="Fecha de término: " + meta.fechaLimite
-            tvAhorroNecesario.text="Ahorro por semana: $" + String.format("%.2f", meta.ahorroNecesario)
+            tvAhorroNecesario.text="Ahorro diario: $" + String.format("%.2f", meta.ahorroNecesario)
             tvDiasRestantes.text= tiempoRestante
 
             when (meta.tipo) {
