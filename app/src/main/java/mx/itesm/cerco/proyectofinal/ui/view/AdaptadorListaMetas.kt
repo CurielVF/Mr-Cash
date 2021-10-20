@@ -4,6 +4,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
@@ -48,6 +49,7 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
         private val tvFechaLimite=vista.findViewById<TextView>(R.id.tvFechaLimite)
         private val tvAhorroNecesario=vista.findViewById<TextView>(R.id.tvAhorroNecesario)
         private val tvDiasRestantes=vista.findViewById<TextView>(R.id.tvDiasRestantes)
+        private val ivTipoMeta=vista.findViewById<ImageView>(R.id.ivTipoMeta)
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun set(meta : Meta){
@@ -62,6 +64,14 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
             tvFechaLimite.text="Fecha de término: " + meta.fechaLimite
             tvAhorroNecesario.text="Ahorro por semana: $" + String.format("%.2f", meta.ahorroNecesario)
             tvDiasRestantes.text= tiempoRestante
+
+            when (meta.tipo) {
+                "ENTRETENIMIENTO" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_entretenimiento)
+                "HOGAR" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_hogar)
+                "COMIDA" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_comida)
+                "OTRO" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_otro)
+                else -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_otro)
+            }
         }
 
         private fun obtenerTiempoRestante(

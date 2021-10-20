@@ -16,23 +16,29 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import java.time.LocalDate
 import java.util.*
-import android.widget.CalendarView
 
 import android.widget.CalendarView.OnDateChangeListener
-import android.widget.Toast
 import mx.itesm.cerco.proyectofinal.Login
 import java.time.Period
 import android.R
-
-
-
+import android.view.View
+import android.widget.*
 
 
 class AgregarMeta : AppCompatActivity() {
     private lateinit var binding: ActivityAgregarMetaBinding
     private lateinit var baseDatos: FirebaseDatabase
+
     @RequiresApi(Build.VERSION_CODES.O)
     private var fecha: LocalDate=LocalDate.now()
+    lateinit var opcionTipo: Spinner
+    lateinit var resultadoTipo: String
+    var opcionesTipos = arrayOf(
+        TiposMetas.ENTRETENIMIENTO,
+        TiposMetas.HOGAR,
+        TiposMetas.COMIDA,
+        TiposMetas.OTRO
+    )
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +48,14 @@ class AgregarMeta : AppCompatActivity() {
 
         baseDatos = Firebase.database
 
+        configurarObservadores()
         configurarEventos()
+
+    }
+
+    private fun configurarObservadores() {
+        opcionTipo = binding.spOpcionTipo
+        opcionTipo.adapter = ArrayAdapter<TiposMetas>(this, R.layout.simple_list_item_1, opcionesTipos)
         val calendar = Calendar.getInstance()
         binding.cvFechaMeta.minDate = calendar.timeInMillis
     }
@@ -57,6 +70,23 @@ class AgregarMeta : AppCompatActivity() {
             fecha = LocalDate.of(year,month + 1,dayOfMonth)
         })
 
+        opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                resultadoTipo = opcionesTipos.get(p2).toString()
+                when (resultadoTipo) {
+                    "ENTRETENIMIENTO" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_entretenimiento)
+                    "HOGAR" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_hogar)
+                    "COMIDA" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_comida)
+                    "OTRO" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_otro)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                println("Selecciona una opción")
+
+            }
+
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -70,7 +100,7 @@ class AgregarMeta : AppCompatActivity() {
         try {
             val nombre = binding.etNombreMeta.text.toString()
             val monto = binding.etMontoMeta.text.toString().toDouble()
-            val tipo = binding.etTipoMeta.text.toString()
+            val tipo = resultadoTipo
             val fechaLimite=fecha.toString()
             val fechaCreacion=LocalDate.now().toString()
             // Crea un objeto alumno con los datos capturados

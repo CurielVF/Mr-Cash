@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".ui.metas.AgregarMeta">
 
     <LinearLayout
@@ -34,7 +35,7 @@
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:maxLength="20"/>
+            android:maxLength="20" />
 
         <TextView
             android:id="@+id/textView4"
@@ -54,7 +55,7 @@
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:maxLength="15"/>
+            android:maxLength="15" />
 
         <TextView
             android:id="@+id/textView7"
@@ -63,19 +64,47 @@
             android:text="Tipo"
             android:textAlignment="center"
             android:textSize="16sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/etTipoMeta"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:maxLength="30"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <ImageView
+                android:id="@+id/ivAgregarTipoMeta"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                tools:context=".SpinnerActivity">
+
+                <Spinner
+                    android:id="@+id/spOpcionTipo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp" />
+
+                <TextView
+                    android:id="@+id/tvResultadoTipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|center_vertical" />
+
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView6"
@@ -103,7 +132,7 @@
             android:text="Agregar" />
 
 
-
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
