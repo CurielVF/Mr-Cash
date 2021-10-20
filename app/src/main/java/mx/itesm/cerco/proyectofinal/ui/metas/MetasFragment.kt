@@ -105,11 +105,13 @@ class MetasFragment : Fragment() {
                     val fechaLimite = registro.child("fechaLimite").getValue(String::class.java)
                     val precio = registro.child("precio").getValue(Double::class.java)
                     val tipo = registro.child("tipo").getValue(String::class.java)
+                    val fechaCreacion = registro.child("fechaCreacion").getValue(String::class.java)
+
                     val periodo = Period.between(LocalDate.now(),LocalDate.parse(fechaLimite))
 
                     val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(),LocalDate.parse(fechaLimite))
                     val ahorroNecesario = precio?.div(diasRestantes)
-                    metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario))
+                    metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario,fechaCreacion))
                 }
 
                 metasViewModel.setMetas(metas)

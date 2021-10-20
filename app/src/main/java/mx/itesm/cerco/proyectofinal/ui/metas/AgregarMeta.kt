@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import mx.itesm.cerco.proyectofinal.R
 import mx.itesm.cerco.proyectofinal.databinding.ActivityAgregarMetaBinding
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +22,10 @@ import android.widget.CalendarView.OnDateChangeListener
 import android.widget.Toast
 import mx.itesm.cerco.proyectofinal.Login
 import java.time.Period
+import android.R
+
+
+
 
 
 class AgregarMeta : AppCompatActivity() {
@@ -69,11 +72,12 @@ class AgregarMeta : AppCompatActivity() {
             val monto = binding.etMontoMeta.text.toString().toDouble()
             val tipo = binding.etTipoMeta.text.toString()
             val fechaLimite=fecha.toString()
+            val fechaCreacion=LocalDate.now().toString()
             // Crea un objeto alumno con los datos capturados
-            val meta = Meta(nombre,fechaLimite,monto,tipo)
+            val meta = Meta(nombre,fechaLimite,monto,tipo,null,null,fechaCreacion)
 
             myRef.setValue(meta)
-
+            super.onBackPressed();
         } catch (e: Exception){
             Toast.makeText(baseContext,"Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
         }
