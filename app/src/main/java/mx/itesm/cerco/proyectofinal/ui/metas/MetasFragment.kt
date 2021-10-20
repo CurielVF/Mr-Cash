@@ -59,21 +59,11 @@ class MetasFragment : Fragment() {
 
     private fun configurarRecycleView() {
 
+        //Llama al método y regresa THIS, regresa el objeto
+        binding.rvListaMetas.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = adaptadorListaMeta
 
-        // Verificar si metas contiene elementos
-        if(metas.isEmpty()){
-            binding.rvListaMetas.visibility = View.GONE
-            binding.emptyView.visibility = View.VISIBLE
-        }else {
-
-            binding.rvListaMetas.visibility = View.VISIBLE
-            binding.emptyView.visibility = View.GONE
-
-            //Llama al método y regresa THIS, regresa el objeto
-            binding.rvListaMetas.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = adaptadorListaMeta
-            }
         }
 
         binding.fabAgregarMeta.setOnClickListener {
@@ -90,7 +80,13 @@ class MetasFragment : Fragment() {
 
         metasViewModel.arrMetas.observe(viewLifecycleOwner){lista ->
                 adaptadorListaMeta.actualizar(lista)
-                metas = lista as MutableList<Meta>
+                if(lista.isEmpty()){
+                    binding.rvListaMetas.visibility = View.GONE
+                    binding.emptyView.visibility = View.VISIBLE
+                }else{
+                    binding.rvListaMetas.visibility = View.VISIBLE
+                    binding.emptyView.visibility = View.GONE
+                }
         }
     }
 
