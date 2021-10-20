@@ -23,6 +23,7 @@ import java.time.Period
 import android.R
 import android.view.View
 import android.widget.*
+import java.lang.Double
 
 
 class AgregarMeta : AppCompatActivity() {
@@ -109,6 +110,15 @@ class AgregarMeta : AppCompatActivity() {
             myRef.setValue(meta)
             super.onBackPressed();
         } catch (e: Exception){
+            try {
+                Double.parseDouble(binding.etMontoMeta.text.toString())
+            }
+            catch (e: NumberFormatException) {
+                binding.etMontoMeta.setError("Monto inválido")
+            }
+            if (binding.etNombreMeta.text.toString().isBlank()){
+                binding.etNombreMeta.setError("Nombre inválido")
+            }
             Toast.makeText(baseContext,"Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
         }
 
