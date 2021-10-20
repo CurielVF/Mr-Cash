@@ -4,4 +4,9 @@
     <string name="title_metas">Metas</string>
     <string name="title_estadisticas">Estadísticas</string>
     <string name="title_tips">Tips</string>
+
+    <string-array name="arrCategorias">
+        <item>Entretenimiento</item>
+        <item>Colegiatura</item>
+    </string-array>
 </resources>

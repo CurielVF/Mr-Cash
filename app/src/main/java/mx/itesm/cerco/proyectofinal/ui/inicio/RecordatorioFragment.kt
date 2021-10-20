@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import mx.itesm.cerco.proyectofinal.databinding.FragmentInicioBinding
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaRecordatorio
+
 
 class
 RecordatorioFragment : Fragment() {
@@ -57,6 +56,7 @@ RecordatorioFragment : Fragment() {
 
     private fun configurarEventos() {
         inicioViewModel.leerDatos() //Resultado demEvento como botón
+
     }
 
     private fun configurarObservadores() {

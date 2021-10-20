@@ -27,4 +27,9 @@
         android:name="mx.itesm.cerco.proyectofinal.ui.tips.TipsFragment"
         android:label="@string/title_tips"
         tools:layout="@layout/fragment_tips" />
+    <fragment
+        android:id="@+id/agregarRecordatorioFragment"
+        android:name="mx.itesm.cerco.proyectofinal.AgregarRecordatorioFragment"
+        android:label="agregar_recordatorio_fragment"
+        tools:layout="@layout/agregar_recordatorio_fragment" />
 </navigation>
