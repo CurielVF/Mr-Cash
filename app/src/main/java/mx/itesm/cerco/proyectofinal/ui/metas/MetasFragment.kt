@@ -46,6 +46,7 @@ class MetasFragment : Fragment() {
 
         _binding = FragmentMetasBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        binding.progressBar.visibility = View.VISIBLE
         return root
     }
 
@@ -80,6 +81,8 @@ class MetasFragment : Fragment() {
 
         metasViewModel.arrMetas.observe(viewLifecycleOwner){lista ->
                 adaptadorListaMeta.actualizar(lista)
+                binding.progressBar.visibility = View.GONE
+
                 if(lista.isEmpty()){
                     binding.rvListaMetas.visibility = View.GONE
                     binding.emptyView.visibility = View.VISIBLE
