@@ -60,10 +60,16 @@ RecordatorioFragment : Fragment() {
             layoutManager =LinearLayoutManager(context)
             adapter= adaptadorListaRecordatorio
         }
+        binding.fabAgregarRecordatorio.setOnClickListener(){
+            val intAgregarRecordatorio = Intent(getActivity(),AgregarRecordatori::class.java)
+            startActivity(intAgregarRecordatorio)
+        }
     }
 
     private fun configurarEventos() {
         inicioViewModel.leerDatos() //Resultado demEvento como botón
+
+
 
         binding.btnSignout.setOnClickListener{
             mAuth.signOut()
