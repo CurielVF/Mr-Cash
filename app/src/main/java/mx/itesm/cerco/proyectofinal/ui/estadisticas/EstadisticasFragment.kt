@@ -54,6 +54,9 @@ class EstadisticasFragment : Fragment() {
         _binding = FragmentEstadisticasBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.tvNoDatos.visibility=View.INVISIBLE
+        binding.pbEstadisticas.visibility = View.VISIBLE
+
         estadisticasViewModel.text.observe(viewLifecycleOwner, Observer {
 
         anyChartView=binding.cartTiposMetas
