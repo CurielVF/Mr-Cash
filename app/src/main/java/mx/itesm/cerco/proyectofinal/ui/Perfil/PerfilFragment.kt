@@ -65,6 +65,13 @@ class PerfilFragment : Fragment() {
             val intLogin = Intent(context, Login::class.java)
             startActivity(intLogin)
         }
+
+        binding.btnBorrarDatos.setOnClickListener{
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            val database = FirebaseDatabase.getInstance()
+            val myRef =database.getReference(uid+"/Metas")
+            myRef.removeValue()
+        }
     }
 
 
