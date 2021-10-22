@@ -77,7 +77,7 @@ class PerfilFragment : Fragment() {
                             dialog, id ->
                         val uid = FirebaseAuth.getInstance().currentUser?.uid
                         val database = FirebaseDatabase.getInstance()
-                        val myRef =database.getReference(uid+"/Metas")
+                        val myRef =database.getReference(uid.toString())
                         myRef.removeValue()
                     })
                     // negative button text and action
