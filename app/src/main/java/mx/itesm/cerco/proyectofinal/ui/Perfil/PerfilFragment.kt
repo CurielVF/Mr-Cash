@@ -1,5 +1,7 @@
 package mx.itesm.cerco.proyectofinal.ui.Perfil
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -67,10 +69,25 @@ class PerfilFragment : Fragment() {
         }
 
         binding.btnBorrarDatos.setOnClickListener{
-            val uid = FirebaseAuth.getInstance().currentUser?.uid
-            val database = FirebaseDatabase.getInstance()
-            val myRef =database.getReference(uid+"/Metas")
-            myRef.removeValue()
+                val dialogBuilder = AlertDialog.Builder(context)
+
+                dialogBuilder.setMessage("¿Estás seguro de que quieres borrar todos los datos?")
+                    .setCancelable(false)
+                    .setPositiveButton("Aceptar", DialogInterface.OnClickListener {
+                            dialog, id ->
+                        val uid = FirebaseAuth.getInstance().currentUser?.uid
+                        val database = FirebaseDatabase.getInstance()
+                        val myRef =database.getReference(uid+"/Metas")
+                        myRef.removeValue()
+                    })
+                    // negative button text and action
+                    .setNegativeButton("Cancelar", DialogInterface.OnClickListener {
+                            dialog, id -> dialog.cancel()
+                    })
+                val alert = dialogBuilder.create()
+                alert.setTitle("Advertencia")
+                alert.show()
+
         }
     }
 
