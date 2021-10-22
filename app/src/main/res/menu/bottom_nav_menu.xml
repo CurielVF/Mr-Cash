@@ -13,6 +13,10 @@
         android:title="@string/title_metas" />
 
     <item
+        android:id="@+id/navigation_perfil"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Perfil" />
+    <item
         android:id="@+id/navigation_notifications"
         android:icon="@android:drawable/ic_menu_today"
         android:title="@string/title_estadisticas" />
