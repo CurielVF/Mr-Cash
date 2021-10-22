@@ -3,6 +3,7 @@ package mx.itesm.cerco.proyectofinal.ui.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.cerco.proyectofinal.R
@@ -38,13 +39,16 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
         notifyDataSetChanged() //Recargar la información
     }
 
-    //Vista del renglón delrecordatorio
+    //Vista del renglón del recordatorio
     class RecordatorioViewHolder(vista : View) : RecyclerView.ViewHolder(vista) {
-        private val tvNombrePago=vista.findViewById<TextView>(R.id.tvNombrePago)
+        private val tvNombrePago=vista.findViewById<TextView>(R.id.tvNombreRecordatorio)
+        private val tvFecha = vista.findViewById<TextView>(R.id.tvFechaRecordatorio)
+        private val tvMonto = vista.findViewById<TextView>(R.id.tvMontoRecordatorio)
 
         fun set(recordatorio : Recordatorio){
-            tvNombrePago.text=recordatorio.nombrePago
+            tvNombrePago.text = recordatorio.nombrePago
+            tvFecha.text = "Fecha de pago: " + recordatorio.fechaPago
+            tvMonto.text = "Monto a pagar: $" + String.format("%.2f", recordatorio.cantidadPago)
         }
-
     }
 }
