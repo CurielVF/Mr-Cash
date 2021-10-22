@@ -1,13 +1,17 @@
 package mx.itesm.cerco.proyectofinal.ui.inicio
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
+import mx.itesm.cerco.proyectofinal.ui.model.ServicioRecordatorio
 
 class RecordatorioVM : ViewModel() {
-    val arrRecordatorios = MutableLiveData<List<Recordatorio>>()
+    private val model= ServicioRecordatorio()
 
-    fun setRecordatorios(recordatorios:List<Recordatorio>){
-        arrRecordatorios.value=recordatorios
+    val arrRecoratorios =MutableLiveData<List<Recordatorio>>()
+
+    fun leerDatos(){
+        arrRecoratorios.value =model.leerRecordatorio()
     }
 }
