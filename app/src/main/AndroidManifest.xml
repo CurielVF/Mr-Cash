@@ -12,6 +12,13 @@
         <activity
             android:name=".ui.inicio.AgregarRecordatori"
             android:exported="true" />
+            android:name=".ui.tips.tipFragment"
+            android:exported="false" />
+        <activity
+            android:name=".ui.tips.tip"
+            android:exported="false"
+            android:label="@string/title_activity_tip"
+            android:theme="@style/Theme.ProyectoFinal.NoActionBar" />
         <activity
             android:name=".Login"
             android:exported="true">
@@ -28,6 +35,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
