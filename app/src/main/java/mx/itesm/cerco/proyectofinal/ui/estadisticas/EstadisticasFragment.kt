@@ -68,22 +68,24 @@ class EstadisticasFragment : Fragment() {
     }
 
     fun crearGraficaTipoMetas(dataEntries: MutableList<DataEntry>){
-        try {
+
             if(dataEntries.isNotEmpty()) {
+                try {
                 binding.tvNoDatos.visibility=View.INVISIBLE
                 val pie = AnyChart.pie()
                 pie.data(dataEntries)
                 pie.title("Monto total por tipo de meta")
                 anyChartView.setChart(pie)
+                }
+                catch (e:Exception){
+
+                }
             }
             else{
                 binding.tvNoDatos.visibility=View.VISIBLE
             }
             binding.pbEstadisticas.visibility=View.INVISIBLE
-        }
-        catch (e:Exception){
 
-        }
     }
 
 
