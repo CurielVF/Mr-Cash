@@ -27,4 +27,9 @@
         android:name="mx.itesm.cerco.proyectofinal.ui.tips.TipsFragment"
         android:label="@string/title_tips"
         tools:layout="@layout/fragment_tips" />
+    <fragment
+        android:id="@+id/navigation_perfil"
+        android:name="mx.itesm.cerco.proyectofinal.ui.Perfil.PerfilFragment"
+        android:label="@string/title_perfil"
+        tools:layout="@layout/fragment_perfil" />
 </navigation>
