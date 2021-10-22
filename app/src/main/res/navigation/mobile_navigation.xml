@@ -26,10 +26,25 @@
         android:id="@+id/navigation_tips"
         android:name="mx.itesm.cerco.proyectofinal.ui.tips.TipsFragment"
         android:label="@string/title_tips"
+
         tools:layout="@layout/fragment_tips" />
     <fragment
         android:id="@+id/navigation_perfil"
         android:name="mx.itesm.cerco.proyectofinal.ui.Perfil.PerfilFragment"
         android:label="@string/title_perfil"
         tools:layout="@layout/fragment_perfil" />
+        tools:layout="@layout/fragment_tips" >
+        <action
+            android:id="@+id/action_navigation_tips_to_detalleTip2"
+            app:destination="@id/navigation_tip2" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_tip2"
+        android:name="mx.itesm.cerco.proyectofinal.ui.tips.DetalleTip"
+        android:label="Tip"
+        tools:layout="@layout/detalle_tip_fragment">
+        <argument
+            android:name="tipSeleccionado"
+            app:argType="mx.itesm.cerco.proyectofinal.ui.tips.model.Tip" />
+    </fragment>
 </navigation>
