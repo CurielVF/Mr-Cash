@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoFinal">
         <activity
+            android:name=".ui.inicio.AgregarRecordatori"
+            android:exported="true" />
             android:name=".ui.tips.tipFragment"
             android:exported="false" />
         <activity
@@ -32,6 +34,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:label="@string/app_name"></activity>
             android:label="@string/app_name" />
     </application>
 
