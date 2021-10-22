@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mx.itesm.cerco.proyectofinal">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoFinal">
         <activity
+            android:name=".ui.inicio.AgregarRecordatori"
+            android:exported="true" />
+            android:name=".ui.tips.tipFragment"
+            android:exported="false" />
+        <activity
+            android:name=".ui.tips.tip"
+            android:exported="false"
+            android:label="@string/title_activity_tip"
+            android:theme="@style/Theme.ProyectoFinal.NoActionBar" />
+        <activity
             android:name=".Login"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,8 +34,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

@@ -120,10 +120,7 @@ class MetasFragment : Fragment() {
                     val periodo = Period.between(LocalDate.now(),LocalDate.parse(fechaLimite))
 
                     val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(),LocalDate.parse(fechaLimite))
-                    var ahorroNecesario = precio?.div(diasRestantes)
-                    if(diasRestantes<1){
-                        ahorroNecesario = precio
-                    }
+                    val ahorroNecesario = precio?.div(diasRestantes)
                     metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario,fechaCreacion))
                 }
 
