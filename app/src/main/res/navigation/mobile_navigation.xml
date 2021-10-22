@@ -40,4 +40,9 @@
             android:name="tipSeleccionado"
             app:argType="mx.itesm.cerco.proyectofinal.ui.tips.model.Tip" />
     </fragment>
+  <fragment
+        android:id="@+id/navigation_perfil"
+        android:name="mx.itesm.cerco.proyectofinal.ui.Perfil.PerfilFragment"
+        android:label="@string/title_perfil"
+        tools:layout="@layout/fragment_perfil" />
 </navigation>

@@ -1,4 +1,5 @@
 <resources>
+    <string name="title_perfil">Perfil</string>
     <string name="app_name">Proyecto final</string>
     <string name="title_inicio">Inicio</string>
     <string name="title_metas">Metas</string>
