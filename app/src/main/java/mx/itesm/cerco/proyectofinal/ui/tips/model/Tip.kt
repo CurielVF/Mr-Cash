@@ -6,6 +6,6 @@ data class Tip(
     // del campo JSON
     val titulo: String,
     val fragContenido: String,
-    val cuerpo: String
+    val URL: String
 
 ): Serializable

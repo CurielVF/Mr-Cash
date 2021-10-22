@@ -1,11 +1,13 @@
 package mx.itesm.cerco.proyectofinal.ui.tips
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import mx.itesm.cerco.proyectofinal.databinding.FragmentTipsBinding
 import mx.itesm.cerco.proyectofinal.ui.tips.model.RenglonListener
@@ -79,8 +81,8 @@ class TipsFragment : Fragment(), RenglonListener {
     override fun clinckEnRenglon(posicion: Int) {
         //Se cambia pantalla a la de tip correspondiente
         val tipSeleccionado = adaptadorListaTips.arrTip[posicion]
-        //val accion = Lista
-        //findNavController().navigate(accion)
+        val accion = TipsFragmentDirections.actionNavigationTipsToDetalleTip2(tipSeleccionado)
+        findNavController()?.navigate(accion)
     }
 
 }

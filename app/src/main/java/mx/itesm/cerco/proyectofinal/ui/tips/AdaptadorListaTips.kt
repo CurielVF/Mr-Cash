@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ class AdaptadorListaTips(var arrTip: ArrayList<Tip>) : RecyclerView.Adapter<Adap
         private val tvExtractTip = vista.findViewById<TextView>(R.id.tvExtractTip)
 
         fun setData (tip: Tip){
-            tvTip.text = tip.titulo
+            tvTip.text= tip.titulo
             tvExtractTip.text = tip.fragContenido
         }
     }
