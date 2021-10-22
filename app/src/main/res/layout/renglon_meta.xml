@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="15dp"
     android:padding="4dp"
-    app:cardBackgroundColor="#FBFAFA"
-    app:cardCornerRadius="5dp">
+    app:cardBackgroundColor="#52796F"
+    app:cardCornerRadius="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,14 +22,16 @@
             android:id="@+id/ivTipoMeta"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
             android:layout_weight="20"
+            android:tint="@color/white"
             app:srcCompat="@android:drawable/presence_offline" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="16dp"
             android:layout_weight="70"
             android:baselineAligned="false"
             android:orientation="vertical"
@@ -41,32 +43,37 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textAlignment="viewStart"
-                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvPrecioMeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CostoTotal" />
+                android:text="CostoTotal"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/tvFechaLimite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/tvAhorroNecesario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/tvDiasRestantes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
     </LinearLayout>
