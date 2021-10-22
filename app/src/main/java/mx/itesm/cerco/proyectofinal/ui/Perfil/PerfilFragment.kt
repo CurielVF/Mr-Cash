@@ -72,7 +72,7 @@ class PerfilFragment : Fragment() {
                 val dialogBuilder = AlertDialog.Builder(context)
 
                 dialogBuilder.setMessage("¿Estás seguro de que quieres borrar todos los datos?")
-                    .setCancelable(false)
+                    .setCancelable(false) //
                     .setPositiveButton("Aceptar", DialogInterface.OnClickListener {
                             dialog, id ->
                         val uid = FirebaseAuth.getInstance().currentUser?.uid
