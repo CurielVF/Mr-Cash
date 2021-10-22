@@ -111,7 +111,8 @@ RecordatorioFragment : Fragment() {
                     val precio = registro.child("cantidadPago").getValue(Double::class.java)
                     val tipo = registro.child("tipo").getValue(String::class.java)
                     val hora = registro.child("hora").getValue(String::class.java)
-                    recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora))
+                    val id = registro.key
+                    recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id))
                 }
 
                 inicioViewModel.setRecordatorios(recordatorios)

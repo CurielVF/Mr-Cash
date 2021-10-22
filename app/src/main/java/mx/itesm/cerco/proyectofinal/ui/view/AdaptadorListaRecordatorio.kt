@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import mx.itesm.cerco.proyectofinal.R
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
 
@@ -19,12 +21,14 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
         //Cada renglon se crea aquí
         val vista =LayoutInflater.from(parent.context).inflate(R.layout.reglon_recordatorio,parent,false)
         return RecordatorioViewHolder(vista)
+
     }
 
 
     override fun onBindViewHolder(holder: RecordatorioViewHolder, position: Int) {
        holder.set(arrRecordatorio[position])
     }
+
 
     //Tamaño del arreglo de los renglones
     override fun getItemCount(): Int {
@@ -44,8 +48,15 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
         private val tvNombrePago=vista.findViewById<TextView>(R.id.tvNombreRecordatorio)
         private val tvFecha = vista.findViewById<TextView>(R.id.tvFechaRecordatorio)
         private val tvMonto = vista.findViewById<TextView>(R.id.tvMontoRecordatorio)
+        private val btnEliminar = vista.findViewById<ImageButton>(R.id.btnEliminarRecordatorio)
 
         fun set(recordatorio : Recordatorio){
+            btnEliminar.setOnClickListener {
+                val uid = FirebaseAuth.getInstance().currentUser?.uid
+                val database = FirebaseDatabase.getInstance()
+                val myRef =database.getReference(uid+"/Recordatorios/"+recordatorio.id)
+                myRef.removeValue()
+            }
             tvNombrePago.text = recordatorio.nombrePago
             tvFecha.text = "Fecha de pago: " + recordatorio.fechaPago
             tvMonto.text = "Monto a pagar: $" + String.format("%.2f", recordatorio.cantidadPago)
