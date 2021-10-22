@@ -1,10 +1,12 @@
 package mx.itesm.cerco.proyectofinal.ui.view
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -15,12 +17,13 @@ import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
 class AdaptadorListaRecordatorio (var arrRecordatorio: ArrayList<Recordatorio>):
 RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
 {
-
+    private lateinit var context: Context
     //Regresa los renglones o cajas cuando es necesario
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordatorioViewHolder {
         //Cada renglon se crea aquí
         val vista =LayoutInflater.from(parent.context).inflate(R.layout.reglon_recordatorio,parent,false)
-        return RecordatorioViewHolder(vista)
+        context = parent.getContext();
+        return RecordatorioViewHolder(vista,context)
 
     }
 
@@ -44,18 +47,19 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
     }
 
     //Vista del renglón del recordatorio
-    class RecordatorioViewHolder(vista : View) : RecyclerView.ViewHolder(vista) {
+    class RecordatorioViewHolder(vista : View,context:Context) : RecyclerView.ViewHolder(vista) {
         private val tvNombrePago=vista.findViewById<TextView>(R.id.tvNombreRecordatorio)
         private val tvFecha = vista.findViewById<TextView>(R.id.tvFechaRecordatorio)
         private val tvMonto = vista.findViewById<TextView>(R.id.tvMontoRecordatorio)
         private val btnEliminar = vista.findViewById<ImageButton>(R.id.btnEliminarRecordatorio)
-
+        private val context=context
         fun set(recordatorio : Recordatorio){
             btnEliminar.setOnClickListener {
                 val uid = FirebaseAuth.getInstance().currentUser?.uid
                 val database = FirebaseDatabase.getInstance()
                 val myRef =database.getReference(uid+"/Recordatorios/"+recordatorio.id)
                 myRef.removeValue()
+                Toast.makeText(context,"Recordatorio eliminado correctamente", Toast.LENGTH_SHORT).show()
             }
             tvNombrePago.text = recordatorio.nombrePago
             tvFecha.text = "Fecha de pago: " + recordatorio.fechaPago
