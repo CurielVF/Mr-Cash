@@ -38,7 +38,6 @@ RecordatorioFragment : Fragment() {
     //Adaptador para el RecycleView
     private val adaptadorListaRecordatorio = AdaptadorListaRecordatorio(arrayListOf())
 
-    private val mAuth = FirebaseAuth.getInstance()
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -76,13 +75,6 @@ RecordatorioFragment : Fragment() {
 
     private fun configurarEventos() {
         leerRecordatorios()
-
-        binding.btnSignout.setOnClickListener{
-            mAuth.signOut()
-            AuthUI.getInstance().signOut(requireContext())
-            val intLogin = Intent(context, Login::class.java)
-            startActivity(intLogin)
-        }
     }
 
     private fun configurarObservadores() {
