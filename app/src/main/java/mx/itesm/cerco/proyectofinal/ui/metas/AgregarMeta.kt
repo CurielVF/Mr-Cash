@@ -121,6 +121,5 @@ class AgregarMeta : AppCompatActivity() {
             }
             Toast.makeText(baseContext,"Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
         }
-
     }
 }
