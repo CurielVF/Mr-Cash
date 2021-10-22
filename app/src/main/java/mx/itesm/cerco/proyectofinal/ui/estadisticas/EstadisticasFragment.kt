@@ -78,7 +78,7 @@ class EstadisticasFragment : Fragment() {
                 anyChartView.setChart(pie)
                 }
                 catch (e:Exception){
-                    println(e.message)
+
                 }
             }
             else{
@@ -97,31 +97,26 @@ class EstadisticasFragment : Fragment() {
         myRef.addValueEventListener(object: ValueEventListener {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
-                try {
-                    tiposMetas.clear()
-                    val dataEntries: MutableList<DataEntry> = ArrayList()
-                    val numbersMap = mutableMapOf<String, Double>()
-                    for (registro in snapshot.children) {
-                        val monto = registro.child("precio").getValue(Double::class.java)
-                        val tipo = registro.child("tipo").getValue(String::class.java)
-                        if (numbersMap.containsKey(tipo.toString())) {
-                            numbersMap[tipo.toString()] =
-                                numbersMap.getValue(tipo.toString()) + monto!!
-                        } else {
-                            numbersMap[tipo.toString()] = monto!!
-                        }
+                tiposMetas.clear()
+                val dataEntries: MutableList<DataEntry> = ArrayList()
+                val numbersMap = mutableMapOf<String,Double>()
+                for(registro in snapshot.children) {
+                    val monto = registro.child("precio").getValue(Double::class.java)
+                    val tipo = registro.child("tipo").getValue(String::class.java)
+                    if(numbersMap.containsKey(tipo.toString())) {
+                        numbersMap[tipo.toString()] = numbersMap.getValue(tipo.toString()) + monto!!
+                    }
+                    else{
+                        numbersMap[tipo.toString()] = monto!!
+                    }
 
-                    }
-                    numbersMap.forEach { tipo, monto ->
-                        dataEntries.add(ValueDataEntry(tipo, monto))
-                    }
-                    crearGraficaTipoMetas(dataEntries)
                 }
-                catch (e:Exception){
-                    println(e.message)
+                numbersMap.forEach{
+                    tipo,monto ->
+                    dataEntries.add(ValueDataEntry(tipo, monto))
                 }
 
-
+                crearGraficaTipoMetas(dataEntries)
             }
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
