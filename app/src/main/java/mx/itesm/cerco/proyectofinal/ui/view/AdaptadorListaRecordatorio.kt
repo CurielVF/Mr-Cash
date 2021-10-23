@@ -1,6 +1,8 @@
 package mx.itesm.cerco.proyectofinal.ui.view
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,11 +57,25 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
         private val context=context
         fun set(recordatorio : Recordatorio){
             btnEliminar.setOnClickListener {
-                val uid = FirebaseAuth.getInstance().currentUser?.uid
-                val database = FirebaseDatabase.getInstance()
-                val myRef =database.getReference(uid+"/Recordatorios/"+recordatorio.id)
-                myRef.removeValue()
-                Toast.makeText(context,"Recordatorio eliminado correctamente", Toast.LENGTH_SHORT).show()
+                val dialogBuilder = AlertDialog.Builder(context)
+
+                dialogBuilder.setMessage("¿Estás seguro de que quieres borrar el recordatorio?")
+                    .setCancelable(false)
+                    .setPositiveButton("Aceptar", DialogInterface.OnClickListener {
+                            dialog, id ->
+                        val uid = FirebaseAuth.getInstance().currentUser?.uid
+                        val database = FirebaseDatabase.getInstance()
+                        val myRef =database.getReference(uid+"/Recordatorios/"+recordatorio.id)
+                        myRef.removeValue()
+                        Toast.makeText(context,"Recordatorio eliminado correctamente", Toast.LENGTH_SHORT).show()
+                    })
+                    // negative button text and action
+                    .setNegativeButton("Cancelar", DialogInterface.OnClickListener {
+                            dialog, id -> dialog.cancel()
+                    })
+                val alert = dialogBuilder.create()
+                alert.setTitle("Advertencia")
+                alert.show()
             }
             tvNombrePago.text = recordatorio.nombrePago
             tvFecha.text = "Fecha de pago: " + recordatorio.fechaPago
