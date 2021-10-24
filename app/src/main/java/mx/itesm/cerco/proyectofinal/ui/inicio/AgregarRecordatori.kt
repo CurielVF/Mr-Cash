@@ -24,7 +24,6 @@ class AgregarRecordatori : AppCompatActivity() {
     private lateinit var baseDatos: FirebaseDatabase
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private var fecha: LocalDate = LocalDate.now()
     lateinit var opcionTipo: Spinner
     lateinit var tipoRecordatorio: String
     var opcionesRecordatorio = arrayOf(
@@ -54,15 +53,12 @@ class AgregarRecordatori : AppCompatActivity() {
     private fun configurarObservadores() {
         opcionTipo = binding.sORecordatorioTipo
         opcionTipo.adapter = ArrayAdapter<TipoRecordatorios>(this, R.layout.simple_list_item_1, opcionesRecordatorio)
-        val calendar = Calendar.getInstance()
-        binding.cvFechaR.minDate = calendar.timeInMillis
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun configurarEventos() {
-        binding.cvFechaR.setOnDateChangeListener(CalendarView.OnDateChangeListener { view, year, month, dayOfMonth ->
-            fecha = LocalDate.of(year, month + 1, dayOfMonth)
-        })
+
 
         binding.btnAgregarRecordatorio.setOnClickListener({
             agregarRecordatorio()
@@ -81,6 +77,18 @@ class AgregarRecordatori : AppCompatActivity() {
 
         }
 
+        binding.etFecha.setOnClickListener{showDatePickerDialog()}
+
+    }
+
+    private fun showDatePickerDialog() {
+        val datePicker =DatePickerFragment {dia,mes,año ->onDateSelected(dia,mes,año)}
+        datePicker.show(supportFragmentManager,"datePicker")
+    }
+
+    fun onDateSelected(dia: Int, mes: Int, año: Int){
+        binding.etFecha?.setText("$dia/$mes/$año")
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -94,7 +102,7 @@ class AgregarRecordatori : AppCompatActivity() {
         try{
             val nombre = binding.etNombreR.text.toString()
             val monto = binding.etMontoR.text.toString().toDouble()
-            val fecha = fecha.toString()
+            val fecha = binding.etFecha.text.toString()//
             val tipo = tipoRecordatorio
             val hora = binding.etHora.text.toString()
 
