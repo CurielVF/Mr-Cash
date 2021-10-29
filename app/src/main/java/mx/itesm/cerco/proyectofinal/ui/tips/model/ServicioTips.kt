@@ -9,11 +9,11 @@ class ServicioTips {
                         , "https://bettermoneyhabits.bankofamerica.com/es/saving-budgeting/ways-to-save-money"),
             Tip("7 consejos básicos para finanzas personales",
             "Entrepreneur nos da 7 consejos muy utiles...", "https://www.entrepreneur.com/article/268900"),
-            Tip("La Mejores SOFIPOS en 2021", "¿Quieres adentrarte mas sobre la educacion financiera?",
+            Tip("La Mejores SOFIPOS en 2021", "¿Quieres adentrarte mas sobre...",
                     "https://omareducacionfinanciera.com/mejores-sofipos-2021/"),
             Tip("Los 10 Mejores ETF's para invertir", "¿Quieres invertir en bolsa? ve a lo seguro...",
             "https://omareducacionfinanciera.com/mejores-sofipos-2021/"),
-            Tip("¿Cómo empezar a invertir en acciones?", "Bueno, hay que empezar con el pie derecho y tienes poca experiecia, bueno, no es necesaria",
+            Tip("¿Cómo empezar a invertir en acciones?", "Bueno, hay que empezar con el pie derecho y tienes poca experiecia...",
             "https://cnnespanol.cnn.com/2021/02/02/invertir-bolsa-sin-experiencia/")
 
 
