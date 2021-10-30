@@ -102,12 +102,10 @@ class AgregarRecordatori : AppCompatActivity() {
             val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
             val hora = binding.etHora.text.toString()
-            if (hora==null){
+            if (binding.etHora.text.toString().isBlank() || binding.etFecha.text.toString().isBlank()){
                 throw IOException()
             }
-            if (fecha==null){
-                throw IOException()
-            }
+
             val recordatorio = Recordatorio(nombre,fecha,monto,tipo,hora)
             myRef.setValue(recordatorio)
             super.onBackPressed();
