@@ -34,7 +34,8 @@
                 android:gravity="center"
                 android:text="Nombre del recordatorio"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
             <EditText
                 android:id="@+id/etNombreR"
@@ -45,7 +46,8 @@
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textAlignment="textStart" />
+                android:textAlignment="center"
+                android:hint="Seleccionar nombre"/>
 
             <TextView
                 android:id="@+id/textView12"
@@ -66,7 +68,9 @@
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:textAlignment="textStart" />
+                android:textAlignment="center"
+                android:hint="Seleccionar monto"
+                />
 
             <TextView
                 android:id="@+id/textView14"

@@ -1,4 +1,4 @@
-package mx.itesm.cerco.proyectofinal.ui.inicio
+package mx.itesm.cerco.proyectofinal
 
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -25,12 +25,14 @@ DatePickerDialog.OnDateSetListener{
         val año=calendario.get(Calendar.YEAR)
 
         val picker=DatePickerDialog(activity as Context,this,año,mes,dia)
+        val calendar = java.util.Calendar.getInstance()
+        picker.datePicker.minDate= calendar.timeInMillis
         return picker
 
     }
 
     //Avisa cuando seleccionamos una fecha en el calendario
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        listener(dayOfMonth,month,year)
+        listener(dayOfMonth,month+1,year)
     }
 }

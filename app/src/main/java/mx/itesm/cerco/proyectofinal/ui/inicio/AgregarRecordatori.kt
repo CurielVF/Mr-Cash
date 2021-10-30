@@ -12,12 +12,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import mx.itesm.cerco.proyectofinal.databinding.ActivityAgregarRecordatoriBinding
+import mx.itesm.cerco.proyectofinal.DatePickerFragment
 import mx.itesm.cerco.proyectofinal.ui.estadisticas.TipoRecordatorios
-import mx.itesm.cerco.proyectofinal.ui.metas.TiposMetas
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
+import java.io.IOException
 import java.lang.Double
-import java.time.LocalDate
-import java.util.*
 
 class AgregarRecordatori : AppCompatActivity() {
     private lateinit var binding: ActivityAgregarRecordatoriBinding
@@ -80,11 +79,13 @@ class AgregarRecordatori : AppCompatActivity() {
     }
 
     private fun showDatePickerDialog(){
-        val datePicker =DatePickerFragment{dia, mes, año -> onDateSelected(dia,mes,año)}
+        val datePicker = DatePickerFragment{ dia, mes, año -> onDateSelected(dia,mes,año)}
         datePicker.show(supportFragmentManager,"datapicker")
+
     }
     fun onDateSelected(dia: Int, mes:Int, año: Int){
         binding.etFecha?.setText("$dia/$mes/$año")
+        binding.etFecha.setError(null)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -101,7 +102,12 @@ class AgregarRecordatori : AppCompatActivity() {
             val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
             val hora = binding.etHora.text.toString()
-
+            if (hora==null){
+                throw IOException()
+            }
+            if (fecha==null){
+                throw IOException()
+            }
             val recordatorio = Recordatorio(nombre,fecha,monto,tipo,hora)
             myRef.setValue(recordatorio)
             super.onBackPressed();
@@ -115,6 +121,12 @@ class AgregarRecordatori : AppCompatActivity() {
             if (binding.etNombreR.text.toString().isBlank()){
                 binding.etNombreR.setError("Nombre inválido")
             }
+            if (binding.etHora.text.toString().isBlank()){
+                binding.etHora.setError("Hora inválida")
+            }
+            if (binding.etFecha.text.toString().isBlank()){
+                binding.etFecha.setError("Fecha inválida")
+            }
             Toast.makeText(baseContext,"Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
         }
     }
@@ -123,6 +135,7 @@ class AgregarRecordatori : AppCompatActivity() {
     fun SeleccionarHora(view: View) {
         val hora = TimePicker{hora,dia -> mostrarHora(hora,dia)}
         hora.show(supportFragmentManager,"TimePicker")
+        binding.etHora.setError(null)
     }
 
     //Muestra la hora seleccionada en el EditText
