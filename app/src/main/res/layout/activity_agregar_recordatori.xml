@@ -44,7 +44,8 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textAlignment="textStart" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -64,7 +65,8 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:textAlignment="textStart" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -85,8 +87,10 @@
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:focusable="false"
+                android:hint="Seleccionar hora"
                 android:inputType="textPersonName"
-                android:onClick="SeleccionarHora" />
+                android:onClick="SeleccionarHora"
+                android:textAlignment="center" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -97,12 +101,19 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <CalendarView
-                android:id="@+id/cvFechaR"
+            <EditText
+                android:id="@+id/etFecha"
                 android:layout_width="match_parent"
-                android:layout_height="306dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="false"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Seleccionar fecha"
+                android:inputType="textPersonName"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/textView2"
