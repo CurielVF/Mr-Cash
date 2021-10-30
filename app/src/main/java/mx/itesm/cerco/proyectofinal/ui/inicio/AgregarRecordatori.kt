@@ -102,7 +102,9 @@ class AgregarRecordatori : AppCompatActivity() {
             val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
             val hora = binding.etHora.text.toString()
-            if (binding.etHora.text.toString().isBlank() || binding.etFecha.text.toString().isBlank()){
+            if (binding.etHora.text.toString().isBlank()
+                || binding.etFecha.text.toString().isBlank()
+                || binding.etNombreR.text.toString().isBlank()){
                 throw IOException()
             }
 

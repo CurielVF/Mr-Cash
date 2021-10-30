@@ -114,7 +114,7 @@ class AgregarMeta : AppCompatActivity() {
             val fechaCreacion=LocalDate.now().toString()
             // Crea un objeto alumno con los datos capturados
             val meta = Meta(nombre,fechaLimite,monto,tipo,null,null,fechaCreacion)
-            if (fecha==null){
+            if (fecha==null || nombre.isBlank() || binding.etMontoMeta.text.toString().isBlank()){
                 throw IOException()
             }
 
