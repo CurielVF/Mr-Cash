@@ -17,6 +17,8 @@ import mx.itesm.cerco.proyectofinal.ui.estadisticas.TipoRecordatorios
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
 import java.io.IOException
 import java.lang.Double
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AgregarRecordatori : AppCompatActivity() {
     private lateinit var binding: ActivityAgregarRecordatoriBinding
@@ -74,24 +76,27 @@ class AgregarRecordatori : AppCompatActivity() {
             }
 
         }
-        binding.etFecha.setOnClickListener{showDatePickerDialog()}
+
 
     }
 
-    private fun showDatePickerDialog(){
-        val datePicker = DatePickerFragment{ dia, mes, año -> onDateSelected(dia,mes,año)}
-        datePicker.show(supportFragmentManager,"datapicker")
 
-    }
-    fun onDateSelected(dia: Int, mes:Int, año: Int){
-        binding.etFecha?.setText("$dia/$mes/$año")
-        binding.etFecha.setError(null)
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun agregarRecordatorio() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val database = FirebaseDatabase.getInstance()
+
+        val customCalendar = Calendar.getInstance()
+        customCalendar.set(
+            binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
+           binding.timeP.hour, binding.timeP.minute, 0
+        )
+        //Crea el formato del tiempo
+        val format = SimpleDateFormat("dd/MM/yyyy")
+        val strDate = format.format(customCalendar.time)
+        binding.etFecha.setText(strDate)
+        binding.etHora.setText(String.format("%02d:%02d",binding.timeP.hour,binding.timeP.minute))
 
         val key = database.getReference(uid+"/Recordatorios").push().getKey()
         val myRef =database.getReference(uid+"/Recordatorios/"+key)
@@ -102,11 +107,9 @@ class AgregarRecordatori : AppCompatActivity() {
             val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
             val hora = binding.etHora.text.toString()
-            if (binding.etHora.text.toString().isBlank()
-                || binding.etFecha.text.toString().isBlank()
-                || binding.etNombreR.text.toString().isBlank()){
-                throw IOException()
-            }
+
+            //tvHora.setText(String.format("%02d:%02d",time_p.hour,time_p.minute))
+
 
             val recordatorio = Recordatorio(nombre,fecha,monto,tipo,hora)
             myRef.setValue(recordatorio)
@@ -121,25 +124,11 @@ class AgregarRecordatori : AppCompatActivity() {
             if (binding.etNombreR.text.toString().isBlank()){
                 binding.etNombreR.setError("Nombre inválido")
             }
-            if (binding.etHora.text.toString().isBlank()){
-                binding.etHora.setError("Hora inválida")
-            }
-            if (binding.etFecha.text.toString().isBlank()){
-                binding.etFecha.setError("Fecha inválida")
-            }
+
             Toast.makeText(baseContext,"Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
         }
     }
 
 
-    fun SeleccionarHora(view: View) {
-        val hora = TimePicker{hora,dia -> mostrarHora(hora,dia)}
-        hora.show(supportFragmentManager,"TimePicker")
-        binding.etHora.setError(null)
-    }
 
-    //Muestra la hora seleccionada en el EditText
-    fun mostrarHora(hora: Int,minuto:Int){
-        binding.etHora?.setText("$hora : $minuto")
-    }
 }

@@ -73,51 +73,40 @@
                 />
 
             <TextView
-                android:id="@+id/textView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Hora"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
                 android:id="@+id/etHora"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="Seleccionar hora"
-                android:inputType="textPersonName"
-                android:onClick="SeleccionarHora"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="Selecciona Hora"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            
+            <TimePicker
+                android:id="@+id/time_p"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date_p"
+                android:timePickerMode="spinner"/>
 
             <TextView
+                android:id="@+id/etFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Fecha"
+                android:text="Selecciona Fecha"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/etFecha"
+            <DatePicker
+                android:id="@+id/date_p"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="8dp"
-                android:clickable="false"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="Seleccionar fecha"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp" />
 
             <TextView
                 android:id="@+id/textView2"
