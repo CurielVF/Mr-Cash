@@ -7,6 +7,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -14,11 +19,15 @@ import com.google.firebase.ktx.Firebase
 import mx.itesm.cerco.proyectofinal.databinding.ActivityAgregarRecordatoriBinding
 import mx.itesm.cerco.proyectofinal.DatePickerFragment
 import mx.itesm.cerco.proyectofinal.ui.estadisticas.TipoRecordatorios
+import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager.Companion.NOTIFICATION_ID
+import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager.Companion.NOTIFICATION_WORK
+import mx.itesm.cerco.proyectofinal.ui.metas.AgregarMeta
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
 import java.io.IOException
 import java.lang.Double
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class AgregarRecordatori : AppCompatActivity() {
     private lateinit var binding: ActivityAgregarRecordatoriBinding
@@ -53,7 +62,8 @@ class AgregarRecordatori : AppCompatActivity() {
 
     private fun configurarObservadores() {
         opcionTipo = binding.sORecordatorioTipo
-        opcionTipo.adapter = ArrayAdapter<TipoRecordatorios>(this, R.layout.simple_list_item_1, opcionesRecordatorio)
+        opcionTipo.adapter =
+            ArrayAdapter<TipoRecordatorios>(this, R.layout.simple_list_item_1, opcionesRecordatorio)
 
     }
 
@@ -62,9 +72,11 @@ class AgregarRecordatori : AppCompatActivity() {
 
         binding.btnAgregarRecordatorio.setOnClickListener({
             agregarRecordatorio()
+            userInterface()
+
         })
 
-        opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 tipoRecordatorio = opcionesRecordatorio.get(p2).toString()
 
@@ -81,7 +93,6 @@ class AgregarRecordatori : AppCompatActivity() {
     }
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun agregarRecordatorio() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -90,18 +101,18 @@ class AgregarRecordatori : AppCompatActivity() {
         val customCalendar = Calendar.getInstance()
         customCalendar.set(
             binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
-           binding.timeP.hour, binding.timeP.minute, 0
+            binding.timeP.hour, binding.timeP.minute, 0
         )
         //Crea el formato del tiempo
         val format = SimpleDateFormat("dd/MM/yyyy")
         val strDate = format.format(customCalendar.time)
         binding.etFecha.setText(strDate)
-        binding.etHora.setText(String.format("%02d:%02d",binding.timeP.hour,binding.timeP.minute))
+        binding.etHora.setText(String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute))
 
-        val key = database.getReference(uid+"/Recordatorios").push().getKey()
-        val myRef =database.getReference(uid+"/Recordatorios/"+key)
+        val key = database.getReference(uid + "/Recordatorios").push().getKey()
+        val myRef = database.getReference(uid + "/Recordatorios/" + key)
 
-        try{
+        try {
             val nombre = binding.etNombreR.text.toString()
             val monto = binding.etMontoR.text.toString().toDouble()
             val fecha = binding.etFecha.text.toString()
@@ -111,24 +122,74 @@ class AgregarRecordatori : AppCompatActivity() {
             //tvHora.setText(String.format("%02d:%02d",time_p.hour,time_p.minute))
 
 
-            val recordatorio = Recordatorio(nombre,fecha,monto,tipo,hora)
+            val recordatorio = Recordatorio(nombre, fecha, monto, tipo, hora)
             myRef.setValue(recordatorio)
             super.onBackPressed();
-        } catch (e: Exception){
+        } catch (e: Exception) {
             try {
                 Double.parseDouble(binding.etMontoR.text.toString())
-            }
-            catch (e: NumberFormatException) {
+            } catch (e: NumberFormatException) {
                 binding.etMontoR.setError("Monto inválido")
             }
-            if (binding.etNombreR.text.toString().isBlank()){
+            if (binding.etNombreR.text.toString().isBlank()) {
                 binding.etNombreR.setError("Nombre inválido")
             }
 
-            Toast.makeText(baseContext,"Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, "Debes introducir todos los campos", Toast.LENGTH_SHORT)
+                .show()
         }
+
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun userInterface() {
+        setSupportActionBar(binding.toolbar)
+
+        val titleNotification = getString(mx.itesm.cerco.proyectofinal.R.string.notification_title)
+        binding.collapsingToolbarL.title = titleNotification
 
 
+
+
+        val customCalendar = Calendar.getInstance()
+        customCalendar.set(
+            binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
+            binding.timeP.hour, binding.timeP.minute, 0
+        )
+        val customTime = customCalendar.timeInMillis
+        val currentTime = System.currentTimeMillis()
+
+        if (customTime > currentTime) {
+            val data = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
+            val delay = customTime - currentTime
+            scheduleNotification(delay, data)
+
+            val titleNotificationSchedule = getString(mx.itesm.cerco.proyectofinal.R.string.notification_schedule_title)
+            val patternNotificationSchedule = getString(mx.itesm.cerco.proyectofinal.R.string.notification_schedule_pattern)
+            Snackbar.make(
+                binding.coordinatorL,
+                titleNotificationSchedule + SimpleDateFormat(
+                    patternNotificationSchedule, Locale.getDefault()
+                ).format(customCalendar.time).toString(),
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else {
+            val errorNotificationSchedule = getString(mx.itesm.cerco.proyectofinal.R.string.notification_schedule_error)
+            Snackbar.make(binding.coordinatorL, errorNotificationSchedule, Snackbar.LENGTH_LONG).show()
+        }
+
+    }
+
+    private fun scheduleNotification(delay: Long, data: Data) {
+        val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data).build()
+
+        val instanceWorkManager = WorkManager.getInstance(this)
+        instanceWorkManager.beginUniqueWork(
+            NOTIFICATION_WORK,
+            ExistingWorkPolicy.REPLACE, notificationWork
+        ).enqueue()
+    }
 }
+
+
