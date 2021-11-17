@@ -41,7 +41,7 @@ class NotificacionWorkManager (context: Context, params: WorkerParameters) : Wor
         val notificationManager =
             applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        val bitmap = applicationContext.vectorToBitmap(R.drawable.ic_schedule_black_24dp)
+        val bitmap = applicationContext.vectorToBitmap(R.drawable.ic_notifications_black_24dp)
         val titleNotification = applicationContext.getString(R.string.notification_title)
         val subtitleNotification = applicationContext.getString(R.string.notification_subtitle)
         val pendingIntent = getActivity(applicationContext, 0, intent, 0)

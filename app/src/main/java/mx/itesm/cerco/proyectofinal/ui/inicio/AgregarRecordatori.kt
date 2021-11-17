@@ -53,9 +53,7 @@ class AgregarRecordatori : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAgregarRecordatoriBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         baseDatos = Firebase.database
-
         configurarObservadores()
         configurarEventos()
     }
@@ -64,7 +62,6 @@ class AgregarRecordatori : AppCompatActivity() {
         opcionTipo = binding.sORecordatorioTipo
         opcionTipo.adapter =
             ArrayAdapter<TipoRecordatorios>(this, R.layout.simple_list_item_1, opcionesRecordatorio)
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -73,25 +70,17 @@ class AgregarRecordatori : AppCompatActivity() {
         binding.btnAgregarRecordatorio.setOnClickListener({
             agregarRecordatorio()
             userInterface()
-
         })
 
         opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 tipoRecordatorio = opcionesRecordatorio.get(p2).toString()
-
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 println("Selecciona una opción")
-
             }
-
         }
-
-
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun agregarRecordatorio() {
@@ -118,10 +107,6 @@ class AgregarRecordatori : AppCompatActivity() {
             val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
             val hora = binding.etHora.text.toString()
-
-            //tvHora.setText(String.format("%02d:%02d",time_p.hour,time_p.minute))
-
-
             val recordatorio = Recordatorio(nombre, fecha, monto, tipo, hora)
             myRef.setValue(recordatorio)
             super.onBackPressed();
@@ -134,23 +119,16 @@ class AgregarRecordatori : AppCompatActivity() {
             if (binding.etNombreR.text.toString().isBlank()) {
                 binding.etNombreR.setError("Nombre inválido")
             }
-
             Toast.makeText(baseContext, "Debes introducir todos los campos", Toast.LENGTH_SHORT)
                 .show()
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun userInterface() {
         setSupportActionBar(binding.toolbar)
-
         val titleNotification = getString(mx.itesm.cerco.proyectofinal.R.string.notification_title)
         binding.collapsingToolbarL.title = titleNotification
-
-
-
-
         val customCalendar = Calendar.getInstance()
         customCalendar.set(
             binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
@@ -177,7 +155,6 @@ class AgregarRecordatori : AppCompatActivity() {
             val errorNotificationSchedule = getString(mx.itesm.cerco.proyectofinal.R.string.notification_schedule_error)
             Snackbar.make(binding.coordinatorL, errorNotificationSchedule, Snackbar.LENGTH_LONG).show()
         }
-
     }
 
     private fun scheduleNotification(delay: Long, data: Data) {
