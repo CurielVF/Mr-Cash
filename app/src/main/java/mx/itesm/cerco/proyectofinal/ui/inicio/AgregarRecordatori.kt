@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.edit
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
@@ -18,6 +19,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import mx.itesm.cerco.proyectofinal.databinding.ActivityAgregarRecordatoriBinding
 import mx.itesm.cerco.proyectofinal.DatePickerFragment
+import mx.itesm.cerco.proyectofinal.LLAVE_NOTIFICACION
+import mx.itesm.cerco.proyectofinal.PREFS_NOTIFICACION
 import mx.itesm.cerco.proyectofinal.ui.estadisticas.TipoRecordatorios
 import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager.Companion.NOTIFICATION_ID
 import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager.Companion.NOTIFICATION_WORK
@@ -32,6 +35,8 @@ import java.util.concurrent.TimeUnit
 class AgregarRecordatori : AppCompatActivity() {
     private lateinit var binding: ActivityAgregarRecordatoriBinding
     private lateinit var baseDatos: FirebaseDatabase
+
+    var numeroNotificaciones = 0;
 
     @RequiresApi(Build.VERSION_CODES.O)
     lateinit var opcionTipo: Spinner
@@ -92,10 +97,12 @@ class AgregarRecordatori : AppCompatActivity() {
             binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
             binding.timeP.hour, binding.timeP.minute, 0
         )
-        //Crea el formato del tiempo
+        //Crea el formato del Fecha
         val format = SimpleDateFormat("dd/MM/yyyy")
         val strDate = format.format(customCalendar.time)
         binding.etFecha.setText(strDate)
+
+        //Crea el formato del Fecha
         binding.etHora.setText(String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute))
 
         val key = database.getReference(uid + "/Recordatorios").push().getKey()
@@ -164,9 +171,10 @@ class AgregarRecordatori : AppCompatActivity() {
         val instanceWorkManager = WorkManager.getInstance(this)
         instanceWorkManager.beginUniqueWork(
             NOTIFICATION_WORK,
-            ExistingWorkPolicy.REPLACE, notificationWork
+            androidx.work.ExistingWorkPolicy.APPEND, notificationWork
         ).enqueue()
     }
+
 }
 
 
