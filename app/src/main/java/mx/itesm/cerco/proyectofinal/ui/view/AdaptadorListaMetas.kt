@@ -5,28 +5,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.cerco.proyectofinal.R
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
+import mx.itesm.cerco.proyectofinal.ui.tips.AdaptadorListaTips
+import mx.itesm.cerco.proyectofinal.ui.tips.model.Tip
 
 class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
     RecyclerView.Adapter<AdaptadorListaMetas.MetaViewHolder>()
 {
+    //Listener. Es un objeto que escucha eventos de Adaptador
+    var listener : RenglonListener?=null
 
     //Regresa los renglones o cajas cuando es necesario
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MetaViewHolder {
         //Cada renglon se crea aquí
-        val vista =
-            LayoutInflater.from(parent.context).inflate(R.layout.renglon_meta,parent,false)
-        return MetaViewHolder(vista)
+        val vistaRenglon = LayoutInflater.from(parent.context)
+            .inflate(R.layout.renglon_meta,parent,false)
+        return MetaViewHolder(vistaRenglon)  //Una caja con ese renglón
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: MetaViewHolder, position: Int) {
         holder.set(arrMetas[position])
+
+        val renglon = holder.itemView.findViewById<LinearLayout>(R.id.layoutRenglon)
+        renglon.setOnClickListener{
+            println("Click sobre: ${arrMetas[position]}")
+            //Hacer el cambio de pantalla ???? interfaces... listener...
+            listener?.clickEnRenglon(position) //Manda mensaje solo si listener no es null
+        }
     }
 
     //Tamaño del arreglo de los renglones
@@ -50,6 +62,7 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
         private val tvAhorroNecesario=vista.findViewById<TextView>(R.id.tvAhorroNecesario)
         private val tvDiasRestantes=vista.findViewById<TextView>(R.id.tvDiasRestantes)
         private val ivTipoMeta=vista.findViewById<ImageView>(R.id.ivTipoMeta)
+
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun set(meta : Meta){

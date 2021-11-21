@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -17,12 +18,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import mx.itesm.cerco.proyectofinal.databinding.FragmentMetasBinding
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
+import mx.itesm.cerco.proyectofinal.ui.tips.TipsFragment
+import mx.itesm.cerco.proyectofinal.ui.tips.TipsFragmentDirections
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaMetas
+import mx.itesm.cerco.proyectofinal.ui.view.RenglonListener
 import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
 
-class MetasFragment : Fragment() {
+class MetasFragment : Fragment(), RenglonListener {
 
     private lateinit var metasViewModel: MetasViewModel
     private var _binding: FragmentMetasBinding? = null
@@ -36,6 +40,9 @@ class MetasFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    companion object {
+        fun newInstance() = MetasFragment()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -136,5 +143,12 @@ class MetasFragment : Fragment() {
 
 
         return metas
+    }
+    //Se hace click en el renglon #
+    override fun clickEnRenglon(posicion: Int) {
+
+        val MetaSeleccionado = adaptadorListaMeta.arrMetas[posicion]
+        println(posicion)
+
     }
 }
