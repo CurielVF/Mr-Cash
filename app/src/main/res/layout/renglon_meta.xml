@@ -6,7 +6,8 @@
     android:layout_margin="10dp"
     android:padding="4dp"
     app:cardBackgroundColor="#52796F"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    >
 
     <LinearLayout
         android:id="@+id/layoutRenglon"

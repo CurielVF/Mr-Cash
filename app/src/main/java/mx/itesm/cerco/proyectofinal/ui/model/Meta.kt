@@ -11,5 +11,8 @@ data class Meta (
     var tipo : String?,
     var periodo : Period? = null,
     var ahorroNecesario : Double? = null,
-    var fechaCreacion: String?) : Serializable
+    var fechaCreacion: String?,
+    var montoReal : Double? = 0.0,
+    var llaveMeta : String? = null,) : Serializable
+
 //, var diasRestantes : Period?, var ahorroNecesario : Double?

@@ -125,20 +125,26 @@ class MetasFragment : Fragment(), RenglonListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 metas.clear()
                 for(registro in snapshot.children) {
+                    val llaveMeta = registro.key
                     val nombre = registro.child("nombre").getValue(String::class.java)
                     val fechaLimite = registro.child("fechaLimite").getValue(String::class.java)
                     val precio = registro.child("precio").getValue(Double::class.java)
                     val tipo = registro.child("tipo").getValue(String::class.java)
                     val fechaCreacion = registro.child("fechaCreacion").getValue(String::class.java)
-
+                    val montoReal = registro.child("montoReal").getValue(Double::class.java)
                     val periodo = Period.between(LocalDate.now(),LocalDate.parse(fechaLimite))
 
                     val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(),LocalDate.parse(fechaLimite))
-                    var ahorroNecesario = precio?.div(diasRestantes)
+                    var ahorroNecesario = (precio!! - montoReal!!)?.div(diasRestantes)
+
+
                     if(diasRestantes<1){
-                        ahorroNecesario = precio
+                        ahorroNecesario = (precio!! - montoReal!!)
                     }
-                    metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario,fechaCreacion))
+                    if (ahorroNecesario < 0.0) {
+                        ahorroNecesario = 0.0
+                    }
+                    metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario,fechaCreacion,montoReal,llaveMeta))
                 }
 
                 metasViewModel.setMetas(metas)
