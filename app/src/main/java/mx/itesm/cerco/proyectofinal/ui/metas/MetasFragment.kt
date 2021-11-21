@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -18,8 +19,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import mx.itesm.cerco.proyectofinal.databinding.FragmentMetasBinding
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
-import mx.itesm.cerco.proyectofinal.ui.tips.TipsFragment
-import mx.itesm.cerco.proyectofinal.ui.tips.TipsFragmentDirections
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaMetas
 import mx.itesm.cerco.proyectofinal.ui.view.RenglonListener
 import java.time.LocalDate
@@ -60,11 +59,19 @@ class MetasFragment : Fragment(), RenglonListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        configurarLista()
         configurarObservadores()
         configurarEventos()
         configurarRecycleView()
     }
+    private fun configurarLista() {
+        binding.rvListaMetas.apply {
+            layoutManager = GridLayoutManager(context, 1)
+            adapter = adaptadorListaMeta
+        }
 
+        adaptadorListaMeta.listener = this
+    }
     private fun configurarRecycleView() {
 
         //Llama al método y regresa THIS, regresa el objeto
@@ -148,7 +155,10 @@ class MetasFragment : Fragment(), RenglonListener {
     override fun clickEnRenglon(posicion: Int) {
 
         val MetaSeleccionado = adaptadorListaMeta.arrMetas[posicion]
-        println(posicion)
+        println("posicion")
+
+        val accion = MetasFragmentDirections.actionNavigationDashboardToDetalleMetaFragment(MetaSeleccionado)
+        findNavController().navigate(accion)
 
     }
 }

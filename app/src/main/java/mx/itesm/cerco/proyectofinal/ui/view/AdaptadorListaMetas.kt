@@ -8,8 +8,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.cerco.proyectofinal.R
+import mx.itesm.cerco.proyectofinal.ui.metas.MetasFragment
+import mx.itesm.cerco.proyectofinal.ui.metas.MetasFragmentDirections
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
 import mx.itesm.cerco.proyectofinal.ui.tips.AdaptadorListaTips
 import mx.itesm.cerco.proyectofinal.ui.tips.model.Tip
@@ -18,7 +22,7 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
     RecyclerView.Adapter<AdaptadorListaMetas.MetaViewHolder>()
 {
     //Listener. Es un objeto que escucha eventos de Adaptador
-    var listener : RenglonListener?=null
+    var listener : RenglonListener? = null
 
     //Regresa los renglones o cajas cuando es necesario
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MetaViewHolder {
@@ -37,7 +41,7 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
         renglon.setOnClickListener{
             println("Click sobre: ${arrMetas[position]}")
             //Hacer el cambio de pantalla ???? interfaces... listener...
-            listener?.clickEnRenglon(position) //Manda mensaje solo si listener no es null
+            listener?.clickEnRenglon(position)
         }
     }
 
