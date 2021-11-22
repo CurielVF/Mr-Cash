@@ -110,10 +110,10 @@ class DetalleMetaFragment : Fragment() {
             val uid = FirebaseAuth.getInstance().currentUser?.uid
             val database = FirebaseDatabase.getInstance()
             val myRef =database.getReference(uid+"/Metas/"+args.meta.llaveMeta+"/montoReal")
-            myRef.setValue(montoReal)
             binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
-            binding.tvMontoRealMetaDetalle.text=montoReal.toString()
             obtenerEstadoMeta()
+            myRef.setValue(montoReal)
+            binding.tvMontoRealMetaDetalle.text=montoReal.toString()
             binding.etAgregarMontoMeta.setText("")
             nuevoMonto = 0.0
         }
@@ -141,6 +141,16 @@ class DetalleMetaFragment : Fragment() {
         if(montoReal >= args.meta.precio!!){
             estadoMeta = "Completado"
             colorEstado = Constantes.color_completado
+            montoReal = args.meta.precio!!
+            binding.etAgregarMontoMeta.isEnabled = false
+            binding.btnAgregarMontoMeta.isEnabled = false
+            binding.btnMonto10Meta.isEnabled = false
+            binding.btnMonto50Meta.isEnabled = false
+            binding.btnMonto100Meta.isEnabled = false
+            binding.btnMonto500Meta.isEnabled = false
+            binding.btnMonto1000Meta.isEnabled = false
+            binding.btnMonto10000Meta.isEnabled = false
+
         }
         else{
 

@@ -1,25 +1,22 @@
 package mx.itesm.cerco.proyectofinal.ui.view
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import mx.itesm.cerco.proyectofinal.R
 import mx.itesm.cerco.proyectofinal.ui.Constantes
-import mx.itesm.cerco.proyectofinal.ui.metas.MetasFragment
-import mx.itesm.cerco.proyectofinal.ui.metas.MetasFragmentDirections
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
-import mx.itesm.cerco.proyectofinal.ui.tips.AdaptadorListaTips
-import mx.itesm.cerco.proyectofinal.ui.tips.model.Tip
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
@@ -28,13 +25,14 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
 {
     //Listener. Es un objeto que escucha eventos de Adaptador
     var listener : RenglonListener? = null
-
+    private lateinit var context: Context
     //Regresa los renglones o cajas cuando es necesario
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MetaViewHolder {
         //Cada renglon se crea aquí
         val vistaRenglon = LayoutInflater.from(parent.context)
             .inflate(R.layout.renglon_meta,parent,false)
-        return MetaViewHolder(vistaRenglon)  //Una caja con ese renglón
+        context = parent.getContext();
+        return MetaViewHolder(vistaRenglon, context)
     }
 
 
@@ -64,7 +62,7 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
     }
 
     //Vista del renglón
-    class MetaViewHolder(vista : View) : RecyclerView.ViewHolder(vista) {
+    class MetaViewHolder(vista: View, context: Context) : RecyclerView.ViewHolder(vista) {
         private val tvNombreMeta=vista.findViewById<TextView>(R.id.tvNombreMeta)
         private val tvPrecio=vista.findViewById<TextView>(R.id.tvPrecioMeta)
         private val tvFechaLimite=vista.findViewById<TextView>(R.id.tvFechaLimite)
@@ -72,9 +70,10 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
         private val tvDiasRestantes=vista.findViewById<TextView>(R.id.tvDiasRestantes)
         private val ivTipoMeta=vista.findViewById<ImageView>(R.id.ivTipoMeta)
         private val cvMeta=vista.findViewById<CardView>(R.id.cvMeta)
-
+        private val btnEliminar=vista.findViewById<ImageButton>(R.id.btnEliminarMeta)
+        private val context=context
         @RequiresApi(Build.VERSION_CODES.O)
-        fun set(meta : Meta){
+        fun set(meta: Meta){
             val añosRestantes = meta.periodo?.years
             val mesesRestantes = meta.periodo?.months
             val diasRestantes = meta.periodo?.days
@@ -97,6 +96,28 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
                 "VEHICULO" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_vehiculo)
                 "VIAJES" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_viaje)
                 else -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_otro)
+            }
+
+            btnEliminar.setOnClickListener {
+                val dialogBuilder = AlertDialog.Builder(context)
+
+                dialogBuilder.setMessage("¿Estás seguro de que quieres borrar la meta?")
+                    .setCancelable(false)
+                    .setPositiveButton("Aceptar", DialogInterface.OnClickListener {
+                            dialog, id ->
+                        val uid = FirebaseAuth.getInstance().currentUser?.uid
+                        val database = FirebaseDatabase.getInstance()
+                        val myRef =database.getReference(uid+"/Metas/"+meta.llaveMeta)
+                        myRef.removeValue()
+                        Toast.makeText(context,"Meta eliminada correctamente", Toast.LENGTH_SHORT).show()
+                    })
+                    // negative button text and action
+                    .setNegativeButton("Cancelar", DialogInterface.OnClickListener {
+                            dialog, id -> dialog.cancel()
+                    })
+                val alert = dialogBuilder.create()
+                alert.setTitle("Advertencia")
+                alert.show()
             }
         }
 
