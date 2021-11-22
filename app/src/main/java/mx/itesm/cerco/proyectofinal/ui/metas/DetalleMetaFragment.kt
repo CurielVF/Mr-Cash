@@ -1,6 +1,8 @@
 package mx.itesm.cerco.proyectofinal.ui.metas
 
+import android.graphics.BlendModeColorFilter
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -21,6 +23,10 @@ import mx.itesm.cerco.proyectofinal.ui.Constantes
 import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
+import android.graphics.drawable.Drawable
+
+
+
 
 class DetalleMetaFragment : Fragment() {
 
@@ -55,19 +61,25 @@ class DetalleMetaFragment : Fragment() {
         binding.tvMontoMetaDetalle.text=args.meta.precio.toString()
         binding.tvMontoRealMetaDetalle.text=montoReal.toString()
         obtenerEstadoMeta()
-        binding.tvEstadoMetaDetalle.text = estadoMeta
-        binding.tvEstadoMetaDetalle.setTextColor(Color.parseColor(colorEstado))
-        when (args.meta.tipo) {
+
+        binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
+        binding.pbMeta.scaleY = 5f
+
+      when (args.meta.tipo) {
             "ENTRETENIMIENTO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_entretenimiento)
             "HOGAR" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_hogar)
             "COMIDA" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_comida)
             "OTRO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_otro)
+            "PERSONAL" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_personal)
+            "VEHICULO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_vehiculo)
+            "VIAJES" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_viaje)
             else -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_otro)
         }
-        binding.ivTipoDetalleMeta.setColorFilter(Color.parseColor(colorEstado))
+
         configurarEventos()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun configurarEventos() {
         binding.btnMonto10Meta.setOnClickListener {
             sumarSaldo(10.0)
@@ -99,7 +111,9 @@ class DetalleMetaFragment : Fragment() {
             val database = FirebaseDatabase.getInstance()
             val myRef =database.getReference(uid+"/Metas/"+args.meta.llaveMeta+"/montoReal")
             myRef.setValue(montoReal)
+            binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
             binding.tvMontoRealMetaDetalle.text=montoReal.toString()
+            obtenerEstadoMeta()
             binding.etAgregarMontoMeta.setText("")
             nuevoMonto = 0.0
         }
@@ -137,5 +151,9 @@ class DetalleMetaFragment : Fragment() {
             }
 
         }
+        binding.ivTipoDetalleMeta.setColorFilter(Color.parseColor(colorEstado))
+        binding.tvEstadoMetaDetalle.text = estadoMeta
+        binding.tvEstadoMetaDetalle.setTextColor(Color.parseColor(colorEstado))
+        binding.pbMeta.progressDrawable.setColorFilter(Color.parseColor(colorEstado), PorterDuff.Mode.SRC_IN)
     }
 }
