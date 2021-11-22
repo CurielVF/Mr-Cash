@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvMeta"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    android:layout_marginBottom="10dp"
     android:padding="4dp"
     app:cardBackgroundColor="#52796F"
-    app:cardCornerRadius="10dp"
-    >
+    app:cardCornerRadius="10dp">
 
     <LinearLayout
         android:id="@+id/layoutRenglon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="horizontal"
         android:paddingLeft="8dp"
         android:paddingTop="4dp"
         android:paddingRight="4dp"
         android:paddingBottom="6dp"
-        android:weightSum="100"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true">
+        android:weightSum="100">
 
 
         <ImageView
@@ -29,8 +30,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
             android:layout_weight="20"
-            app:tint="@color/white"
-            app:srcCompat="@android:drawable/presence_offline" />
+            app:srcCompat="@android:drawable/presence_offline"
+            app:tint="@color/white" />
 
         <LinearLayout
             android:layout_width="wrap_content"

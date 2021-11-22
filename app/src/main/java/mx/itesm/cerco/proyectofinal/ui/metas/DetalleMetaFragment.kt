@@ -1,5 +1,7 @@
 package mx.itesm.cerco.proyectofinal.ui.metas
 
+import android.graphics.Color
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,8 +14,13 @@ import mx.itesm.cerco.proyectofinal.R
 import mx.itesm.cerco.proyectofinal.databinding.FragmentDetalleMetaBinding
 import android.text.InputFilter;
 import android.text.InputType
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import mx.itesm.cerco.proyectofinal.ui.Constantes
+import java.time.LocalDate
+import java.time.Period
+import java.time.temporal.ChronoUnit
 
 class DetalleMetaFragment : Fragment() {
 
@@ -28,6 +35,8 @@ class DetalleMetaFragment : Fragment() {
     private val args : DetalleMetaFragmentArgs by navArgs<DetalleMetaFragmentArgs>()
     private var nuevoMonto: Double? = 0.0
     private var montoReal: Double = 0.0
+    private var estadoMeta: String = "En progreso"
+    private var colorEstado: String = Constantes.color_progreso
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +46,7 @@ class DetalleMetaFragment : Fragment() {
         return  binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         montoReal = args.meta.montoReal!!
@@ -44,7 +54,9 @@ class DetalleMetaFragment : Fragment() {
         binding.tvFechaMetaDetalle.text=args.meta.fechaLimite.toString()
         binding.tvMontoMetaDetalle.text=args.meta.precio.toString()
         binding.tvMontoRealMetaDetalle.text=montoReal.toString()
-
+        obtenerEstadoMeta()
+        binding.tvEstadoMetaDetalle.text = estadoMeta
+        binding.tvEstadoMetaDetalle.setTextColor(Color.parseColor(colorEstado))
         when (args.meta.tipo) {
             "ENTRETENIMIENTO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_entretenimiento)
             "HOGAR" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_hogar)
@@ -52,7 +64,7 @@ class DetalleMetaFragment : Fragment() {
             "OTRO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_otro)
             else -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_otro)
         }
-
+        binding.ivTipoDetalleMeta.setColorFilter(Color.parseColor(colorEstado))
         configurarEventos()
     }
 
@@ -110,4 +122,20 @@ class DetalleMetaFragment : Fragment() {
         binding.etAgregarMontoMeta.setText(nuevoMonto.toString())
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun obtenerEstadoMeta(){
+        if(montoReal >= args.meta.precio!!){
+            estadoMeta = "Completado"
+            colorEstado = Constantes.color_completado
+        }
+        else{
+
+            val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(args.meta.fechaLimite))
+            if (diasRestantes < 0){
+                estadoMeta = "Con retraso"
+                colorEstado = Constantes.color_retraso
+            }
+
+        }
+    }
 }

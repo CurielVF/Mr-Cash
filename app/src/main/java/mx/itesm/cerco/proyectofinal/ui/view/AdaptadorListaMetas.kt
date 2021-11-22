@@ -1,5 +1,6 @@
 package mx.itesm.cerco.proyectofinal.ui.view
 
+import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +10,18 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.cerco.proyectofinal.R
+import mx.itesm.cerco.proyectofinal.ui.Constantes
 import mx.itesm.cerco.proyectofinal.ui.metas.MetasFragment
 import mx.itesm.cerco.proyectofinal.ui.metas.MetasFragmentDirections
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
 import mx.itesm.cerco.proyectofinal.ui.tips.AdaptadorListaTips
 import mx.itesm.cerco.proyectofinal.ui.tips.model.Tip
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
     RecyclerView.Adapter<AdaptadorListaMetas.MetaViewHolder>()
@@ -66,22 +71,23 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
         private val tvAhorroNecesario=vista.findViewById<TextView>(R.id.tvAhorroNecesario)
         private val tvDiasRestantes=vista.findViewById<TextView>(R.id.tvDiasRestantes)
         private val ivTipoMeta=vista.findViewById<ImageView>(R.id.ivTipoMeta)
-
+        private val cvMeta=vista.findViewById<CardView>(R.id.cvMeta)
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun set(meta : Meta){
             val añosRestantes = meta.periodo?.years
             val mesesRestantes = meta.periodo?.months
             val diasRestantes = meta.periodo?.days
-
-            val tiempoRestante = obtenerTiempoRestante(añosRestantes,mesesRestantes,diasRestantes)
+            val totalDias = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(meta.fechaLimite))
+            val tiempoRestante = obtenerTiempoRestante(añosRestantes,mesesRestantes,diasRestantes,totalDias)
 
             tvNombreMeta.text=meta.nombre
             tvPrecio.text="Costo total: $" + String.format("%.2f", meta.precio)
             tvFechaLimite.text="Fecha de término: " + meta.fechaLimite
             tvAhorroNecesario.text="Ahorro diario: $" + String.format("%.2f", meta.ahorroNecesario)
             tvDiasRestantes.text= tiempoRestante
-
+            val colorEstado = obtenerEstadoColor(meta.montoReal!!,meta.precio!!,meta.fechaLimite!!)
+            cvMeta.setCardBackgroundColor(Color.parseColor(colorEstado))
             when (meta.tipo) {
                 "ENTRETENIMIENTO" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_entretenimiento)
                 "HOGAR" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_hogar)
@@ -91,42 +97,72 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
+        private fun obtenerEstadoColor(
+            montoReal: Double,
+            montoMeta: Double,
+            fechaLimite: String
+        ): String? {
+            var colorEstado = Constantes.color_progreso
+            if(montoReal >= montoMeta){
+                colorEstado = Constantes.color_completado
+            }
+            else{
+
+                val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(fechaLimite))
+                if (diasRestantes < 0){
+                    colorEstado = Constantes.color_retraso
+                }
+
+            }
+
+            return colorEstado
+
+        }
+
         private fun obtenerTiempoRestante(
             añosRestantes: Int?,
             mesesRestantes: Int?,
-            diasRestantes: Int?
+            diasRestantes: Int?,
+            totalDias: Long
         ): String {
             var añosRString = ""
             var mesesRString = ""
             var diasRString = ""
 
-            if (añosRestantes != 0) {
-                añosRString =
-                    if (añosRestantes == 1) "Queda 1 año" else "Quedan " + añosRestantes.toString() + " años"
-                if (mesesRestantes != 0) {
-                    if (diasRestantes != 0) {
-                        mesesRString =
-                            if (mesesRestantes == 1) ", 1 mes" else ", " + mesesRestantes.toString() + " meses"
+            if (totalDias!! >= 0) {
+                if (añosRestantes != 0) {
+                    añosRString =
+                        if (añosRestantes == 1) "Queda 1 año" else "Quedan " + añosRestantes.toString() + " años"
+                    if (mesesRestantes != 0) {
+                        if (diasRestantes != 0) {
+                            mesesRString =
+                                if (mesesRestantes == 1) ", 1 mes" else ", " + mesesRestantes.toString() + " meses"
+                            diasRString =
+                                if (diasRestantes == 1) " y 1 día" else " y " + diasRestantes.toString() + " días"
+                        } else {
+                            mesesRString =
+                                if (mesesRestantes == 1) " y 1 mes" else " y " + mesesRestantes.toString() + " meses"
+                        }
+                    } else if (diasRestantes != 0) {
                         diasRString =
                             if (diasRestantes == 1) " y 1 día" else " y " + diasRestantes.toString() + " días"
-                    } else {
-                        mesesRString =
-                            if (mesesRestantes == 1) " y 1 mes" else " y " + mesesRestantes.toString() + " meses"
                     }
-                } else if (diasRestantes != 0) {
+                } else if (mesesRestantes != 0) {
+                    mesesRString =
+                        if (mesesRestantes == 1) "Queda 1 mes" else "Quedan " + mesesRestantes.toString() + " meses"
+                    if (diasRestantes != 0) {
+                        diasRString =
+                            " y " + if (diasRestantes == 1) "1 día" else diasRestantes.toString() + " días"
+                    }
+                } else {
                     diasRString =
-                        if (diasRestantes == 1) " y 1 día" else " y " + diasRestantes.toString() + " días"
+                        if (diasRestantes == 1) "Queda 1 día" else "Quedan " + diasRestantes.toString() + " días"
                 }
-            } else if (mesesRestantes != 0) {
-                mesesRString =
-                    if (mesesRestantes == 1) "Queda 1 mes" else "Quedan " + mesesRestantes.toString() + " meses"
-                if (diasRestantes != 0) {
-                    diasRString =
-                        " y " + if (diasRestantes == 1) "1 día" else diasRestantes.toString() + " días"
-                }
-            } else {
+            }
+            else{
                 diasRString =
-                    if (diasRestantes == 1) "Queda 1 día" else "Quedan " + diasRestantes.toString() + " días"
+                    if (-1.0 == totalDias.toDouble() ) "Retrasado 1 día" else "Retrasado " + (-totalDias).toString() + " días"
             }
 
             val tiempoRestante = añosRString + mesesRString + diasRString
@@ -134,5 +170,6 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
         }
 
     }
+
 
 }
