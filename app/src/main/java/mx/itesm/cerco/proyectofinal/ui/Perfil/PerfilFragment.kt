@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +25,7 @@ import mx.itesm.cerco.proyectofinal.Login
 import mx.itesm.cerco.proyectofinal.R
 import mx.itesm.cerco.proyectofinal.databinding.FragmentInicioBinding
 import mx.itesm.cerco.proyectofinal.databinding.FragmentPerfilBinding
+import mx.itesm.cerco.proyectofinal.ui.tips.TipsFragmentDirections
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaMetas
 
 class PerfilFragment : Fragment() {
@@ -89,6 +91,13 @@ class PerfilFragment : Fragment() {
                 alert.show()
 
         }
+
+        //Agregar aqui el boton de acerca de
+        binding.btnAcercaDe.setOnClickListener {
+            val accion = PerfilFragmentDirections.actionNavigationPerfilToAcercaDe()
+            findNavController()?.navigate(accion)
+        }
+
     }
 
 
