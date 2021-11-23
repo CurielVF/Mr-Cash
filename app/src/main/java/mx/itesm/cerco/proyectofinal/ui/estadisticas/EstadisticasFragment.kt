@@ -1,5 +1,6 @@
 package mx.itesm.cerco.proyectofinal.ui.estadisticas
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,10 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
 import mx.itesm.cerco.proyectofinal.databinding.FragmentEstadisticasBinding
@@ -59,10 +64,25 @@ class EstadisticasFragment : Fragment() {
 
         estadisticasViewModel.text.observe(viewLifecycleOwner, Observer {
 
-        anyChartView=binding.cartTiposMetas
-        leerTiposMetas()
+            anyChartView = binding.cartTiposMetas
+            leerTiposMetas()
+
+
         })
+
+        configuradorEventos()
+
         return root
+    }
+
+    private fun configuradorEventos() {
+        binding.btnRecordatorios.setOnClickListener {
+            val accion = EstadisticasFragmentDirections.actionNavigationNotificationsToEstadisticasDetail()
+            this.findNavController()?.navigate(accion)
+            
+
+        }
+
     }
 
     override fun onDestroyView() {
@@ -70,19 +90,22 @@ class EstadisticasFragment : Fragment() {
         _binding = null
     }
 
+
     fun crearGraficaTipoMetas(dataEntries: MutableList<DataEntry>){
 
             if(dataEntries.isNotEmpty()) {
                 try {
-                binding.tvNoDatos.visibility=View.INVISIBLE
-                val pie = AnyChart.pie()
-                pie.data(dataEntries)
-                pie.title("Monto total por tipo de meta")
-                anyChartView.setChart(pie)
+                    binding.tvNoDatos.visibility=View.INVISIBLE
+                    val pie = AnyChart.pie3d()
+                    pie.data(dataEntries)
+                    pie.title("Monto total por tipo de meta")
+                    anyChartView.setChart(pie)
+
                 }
                 catch (e:Exception){
                     println(e.message)
                 }
+
             }
             else{
                 binding.tvNoDatos.visibility=View.VISIBLE
@@ -90,6 +113,7 @@ class EstadisticasFragment : Fragment() {
             binding.pbEstadisticas.visibility=View.INVISIBLE
 
     }
+
 
 
     fun leerTiposMetas(){
@@ -119,6 +143,7 @@ class EstadisticasFragment : Fragment() {
                         dataEntries.add(ValueDataEntry(tipo, monto))
                     }
                     crearGraficaTipoMetas(dataEntries)
+
                 }
                 catch (e:Exception){
                     println(e.message)
@@ -126,6 +151,7 @@ class EstadisticasFragment : Fragment() {
 
 
             }
+
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
             }
