@@ -35,6 +35,9 @@ class AgregarMeta : AppCompatActivity() {
         TiposMetas.ENTRETENIMIENTO,
         TiposMetas.HOGAR,
         TiposMetas.COMIDA,
+        TiposMetas.PERSONAL,
+        TiposMetas.VEHICULO,
+        TiposMetas.VIAJES,
         TiposMetas.OTRO
     )
 
@@ -87,6 +90,9 @@ class AgregarMeta : AppCompatActivity() {
                     "HOGAR" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_hogar)
                     "COMIDA" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_comida)
                     "OTRO" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_otro)
+                    "PERSONAL" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_personal)
+                    "VEHICULO" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_vehiculo)
+                    "VIAJES" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_viaje)
                 }
             }
 

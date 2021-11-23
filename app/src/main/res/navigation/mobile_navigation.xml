@@ -15,7 +15,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="mx.itesm.cerco.proyectofinal.ui.metas.MetasFragment"
         android:label="@string/title_metas"
-        tools:layout="@layout/fragment_metas" />
+        tools:layout="@layout/fragment_metas" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_detalleMetaFragment"
+            app:destination="@id/detalleMetaFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -52,9 +56,11 @@
         android:label="@string/title_perfil"
         tools:layout="@layout/fragment_perfil" />
     <fragment
-        android:id="@+id/navigation_estadisticas_detail"
-        android:name="mx.itesm.cerco.proyectofinal.ui.estadisticas.Estadisticas_detail"
-        android:label="estadisticas_detail_fragment"
-        tools:layout="@layout/estadisticas_detail_fragment" />
-
+        android:id="@+id/detalleMetaFragment"
+        android:name="mx.itesm.cerco.proyectofinal.ui.metas.DetalleMetaFragment"
+        android:label="fragment_detalle_meta">
+        <argument
+            android:name="meta"
+            app:argType="mx.itesm.cerco.proyectofinal.ui.model.Meta" />
+    </fragment>
 </navigation>
