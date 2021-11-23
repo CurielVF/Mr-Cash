@@ -25,13 +25,7 @@
         android:id="@+id/navigation_notifications"
         android:name="mx.itesm.cerco.proyectofinal.ui.estadisticas.EstadisticasFragment"
         android:label="@string/title_estadisticas"
-        tools:layout="@layout/fragment_estadisticas" >
-        <action
-            android:id="@+id/action_navigation_notifications_to_estadisticas_detail"
-            app:destination="@id/navigation_estadisticas_detail"
-            app:popUpTo="@+id/main_nav_graph"
-            app:popUpToInclusive="true"/>
-    </fragment>
+        tools:layout="@layout/fragment_estadisticas" />
     <fragment
         android:id="@+id/navigation_tips"
         android:name="mx.itesm.cerco.proyectofinal.ui.tips.TipsFragment"
@@ -63,9 +57,4 @@
             android:name="meta"
             app:argType="mx.itesm.cerco.proyectofinal.ui.model.Meta" />
     </fragment>
-    <fragment
-        android:id="@+id/navigation_estadisticas_detail"
-        android:name="mx.itesm.cerco.proyectofinal.ui.estadisticas.Estadisticas_detail"
-        android:label="estadisticas_detail_fragment"
-        tools:layout="@layout/estadisticas_detail_fragment" />
 </navigation>
