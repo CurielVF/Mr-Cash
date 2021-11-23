@@ -20,6 +20,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="70"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:context=".SpinnerActivity"
+        tools:ignore="MissingConstraints">
+
+        <Spinner
+            android:id="@+id/spOpcionEstadistica"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:padding="20dp" />
+
+        <TextView
+            android:id="@+id/tvResultadoEstadistica"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_vertical" />
+
+    </LinearLayout>
+
     <ProgressBar
         android:id="@+id/pbEstadisticas"
         style="?android:attr/progressBarStyle"
@@ -28,18 +56,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <com.anychart.AnyChartView
         android:id="@+id/cartTiposMetas"
-        android:layout_width="379dp"
-        android:layout_height="653dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="361dp"
+        android:layout_height="454dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNoDatos"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
     </com.anychart.AnyChartView>
+
+
 
     <TextView
         android:id="@+id/textView8"
@@ -51,17 +81,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnRecordatorios"
-        android:layout_width="115dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
-        android:text="Recordatorios"
-        android:textSize="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
