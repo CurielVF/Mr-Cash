@@ -3,16 +3,15 @@ package mx.itesm.cerco.proyectofinal.ui.tips
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.cerco.proyectofinal.R
-import mx.itesm.cerco.proyectofinal.ui.tips.model.RenglonListener
+import mx.itesm.cerco.proyectofinal.ui.view.RenglonListener
 import mx.itesm.cerco.proyectofinal.ui.tips.model.Tip
 
-class AdaptadorListaTips(var arrTip: ArrayList<Tip>) : RecyclerView.Adapter<AdaptadorListaTips.TipsViewHolder> ()
+class AdaptadorListaTips(var arrTip: ArrayList<Tip>) :
+    RecyclerView.Adapter<AdaptadorListaTips.TipsViewHolder> ()
 {
     class TipsViewHolder (vista: View) : RecyclerView.ViewHolder(vista) {
         //Titulo del Tip
@@ -39,7 +38,7 @@ class AdaptadorListaTips(var arrTip: ArrayList<Tip>) : RecyclerView.Adapter<Adap
 
         val renglon = holder.itemView.findViewById<LinearLayout>(R.id.layoutRenglon)
         renglon.setOnClickListener {
-            listener?.clinckEnRenglon(position)
+            listener?.clickEnRenglon(position)
         }
     }
 

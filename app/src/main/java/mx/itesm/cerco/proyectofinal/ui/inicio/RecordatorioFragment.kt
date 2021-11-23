@@ -32,6 +32,7 @@ class
 RecordatorioFragment : Fragment() {
 
     private lateinit var inicioViewModel: RecordatorioVM
+
     private var _binding: FragmentInicioBinding? = null
     private var recordatorios: MutableList<Recordatorio> = mutableListOf<Recordatorio>()
 

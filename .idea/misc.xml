@@ -9,16 +9,24 @@
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_agregar_recordatori.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_main.xml" value="0.2364217252396166" />
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/detalle_meta_fragment.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/detalle_meta_fragment2.xml" value="0.17552083333333332" />
+
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/estadisticas_detail_fragment.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_estadisticas.xml" value="0.7819025522041764" />
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_detalle_meta.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_estadisticas.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_inicio.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_metas.xml" value="0.12864583333333332" />
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_metas.xml" value="0.1" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_pefil.xml" value="0.22" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_perfil.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_tips.xml" value="0.1" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/pefil_fragment.xml" value="0.12864583333333332" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/reglon_recordatorio.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/renglon_meta.xml" value="0.41013071895424835" />
+        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/renglon_tip.xml" value="0.1" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/tips_fragment.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyectofinal2/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
@@ -54,10 +62,12 @@
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_main.xml" value="0.2851851851851852" />
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_inicio.xml" value="0.2851851851851852" />
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_metas.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/activity_agregar_recordatori.xml" value="0.17447916666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

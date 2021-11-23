@@ -5,5 +5,8 @@ enum class TiposMetas {
     ENTRETENIMIENTO,
     HOGAR,
     COMIDA,
+    PERSONAL,
+    VIAJES,
+    VEHICULO,
     OTRO
 }

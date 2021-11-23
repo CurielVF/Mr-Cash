@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -18,11 +20,12 @@ import com.google.firebase.database.ValueEventListener
 import mx.itesm.cerco.proyectofinal.databinding.FragmentMetasBinding
 import mx.itesm.cerco.proyectofinal.ui.model.Meta
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaMetas
+import mx.itesm.cerco.proyectofinal.ui.view.RenglonListener
 import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
 
-class MetasFragment : Fragment() {
+class MetasFragment : Fragment(), RenglonListener {
 
     private lateinit var metasViewModel: MetasViewModel
     private var _binding: FragmentMetasBinding? = null
@@ -36,6 +39,9 @@ class MetasFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    companion object {
+        fun newInstance() = MetasFragment()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,11 +59,19 @@ class MetasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        configurarLista()
         configurarObservadores()
         configurarEventos()
         configurarRecycleView()
     }
+    private fun configurarLista() {
+        binding.rvListaMetas.apply {
+            layoutManager = GridLayoutManager(context, 1)
+            adapter = adaptadorListaMeta
+        }
 
+        adaptadorListaMeta.listener = this
+    }
     private fun configurarRecycleView() {
 
         //Llama al método y regresa THIS, regresa el objeto
@@ -111,20 +125,26 @@ class MetasFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 metas.clear()
                 for(registro in snapshot.children) {
+                    val llaveMeta = registro.key
                     val nombre = registro.child("nombre").getValue(String::class.java)
                     val fechaLimite = registro.child("fechaLimite").getValue(String::class.java)
                     val precio = registro.child("precio").getValue(Double::class.java)
                     val tipo = registro.child("tipo").getValue(String::class.java)
                     val fechaCreacion = registro.child("fechaCreacion").getValue(String::class.java)
-
+                    val montoReal = registro.child("montoReal").getValue(Double::class.java)
                     val periodo = Period.between(LocalDate.now(),LocalDate.parse(fechaLimite))
 
                     val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(),LocalDate.parse(fechaLimite))
-                    var ahorroNecesario = precio?.div(diasRestantes)
+                    var ahorroNecesario = (precio!! - montoReal!!)?.div(diasRestantes)
+
+
                     if(diasRestantes<1){
-                        ahorroNecesario = precio
+                        ahorroNecesario = (precio!! - montoReal!!)
                     }
-                    metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario,fechaCreacion))
+                    if (ahorroNecesario < 0.0) {
+                        ahorroNecesario = 0.0
+                    }
+                    metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario,fechaCreacion,montoReal,llaveMeta))
                 }
 
                 metasViewModel.setMetas(metas)
@@ -136,5 +156,15 @@ class MetasFragment : Fragment() {
 
 
         return metas
+    }
+    //Se hace click en el renglon #
+    override fun clickEnRenglon(posicion: Int) {
+
+        val MetaSeleccionado = adaptadorListaMeta.arrMetas[posicion]
+        println("posicion")
+
+        val accion = MetasFragmentDirections.actionNavigationDashboardToDetalleMetaFragment(MetaSeleccionado)
+        findNavController().navigate(accion)
+
     }
 }
