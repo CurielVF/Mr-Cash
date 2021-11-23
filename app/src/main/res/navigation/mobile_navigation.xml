@@ -48,7 +48,16 @@
         android:id="@+id/navigation_perfil"
         android:name="mx.itesm.cerco.proyectofinal.ui.Perfil.PerfilFragment"
         android:label="@string/title_perfil"
-        tools:layout="@layout/fragment_perfil" />
+        tools:layout="@layout/fragment_perfil" >
+      <action
+          android:id="@+id/action_navigation_perfil_to_acercaDe"
+          app:destination="@id/acercaDe" />
+  </fragment>
+    <fragment
+        android:id="@+id/acercaDe"
+        android:name="mx.itesm.cerco.proyectofinal.ui.Perfil.AcercaDe"
+        android:label="acerca_de_fragment"
+        tools:layout="@layout/acerca_de_fragment" />
     <fragment
         android:id="@+id/detalleMetaFragment"
         android:name="mx.itesm.cerco.proyectofinal.ui.metas.DetalleMetaFragment"

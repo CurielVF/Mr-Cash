@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="100"
+    android:textAlignment="center"
     tools:context=".ui.Perfil.PerfilFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -76,4 +77,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="DuplicateIds" />
+
+    <Button
+        android:id="@+id/btnAcercaDe"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="62dp"
+        android:layout_height="54dp"
+        android:backgroundTint="#00FFFFFF"
+        app:icon="@android:drawable/ic_menu_info_details"
+        app:iconTint="#959191"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
