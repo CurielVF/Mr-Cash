@@ -63,4 +63,9 @@
             android:name="meta"
             app:argType="mx.itesm.cerco.proyectofinal.ui.model.Meta" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_estadisticas_detail"
+        android:name="mx.itesm.cerco.proyectofinal.ui.estadisticas.Estadisticas_detail"
+        android:label="estadisticas_detail_fragment"
+        tools:layout="@layout/estadisticas_detail_fragment" />
 </navigation>
