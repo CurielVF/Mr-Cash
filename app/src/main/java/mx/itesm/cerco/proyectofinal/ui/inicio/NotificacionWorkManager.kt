@@ -31,14 +31,19 @@ import mx.itesm.cerco.proyectofinal.R
 
 class NotificacionWorkManager (val context: Context, params: WorkerParameters) : Worker(context, params){
 
+    lateinit var subtitleNot: String
     override fun doWork(): Result {
         val id = inputData.getLong(NOTIFICATION_ID, 0).toInt()
-        sendNotification(id)
+        val nombre = inputData.getString("Nombre").toString()
+        val monto = inputData.getString("Monto").toString()
+        sendNotification(id,nombre,monto)
 
         return success()
     }
-
-    private fun sendNotification(id: Int) {
+    private fun setSubtitle(subtitle: String) {
+        subtitleNot = subtitle
+    }
+    private fun sendNotification(id: Int,nombre: String,monto: String) {
 
         val preferencias = context.getSharedPreferences(PREFS_NOTIFICACION, AppCompatActivity.MODE_PRIVATE)
         var numeroNotificaciones= preferencias.getInt(LLAVE_NOTIFICACION,0)
@@ -55,9 +60,9 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
         val notificationManager =
             applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        val bitmap = applicationContext.vectorToBitmap(R.drawable.ic_notifications_black_24dp)
-        val titleNotification = applicationContext.getString(R.string.notification_title)
-        val subtitleNotification = applicationContext.getString(R.string.notification_subtitle)
+        val bitmap = applicationContext.vectorToBitmap(R.drawable.logo_mr_cash_cuadro)
+        val titleNotification = nombre
+        val subtitleNotification = "¡Tienes un pago de $" +monto+" que hacer!"
         val pendingIntent = getActivity(applicationContext, numeroNotificaciones, intent, 0)
         val notification = Builder(applicationContext, NOTIFICATION_CHANNEL)
             .setLargeIcon(bitmap).setSmallIcon(R.drawable.ic_schedule_white)

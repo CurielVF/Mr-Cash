@@ -145,7 +145,10 @@ class AgregarRecordatori : AppCompatActivity() {
         val currentTime = System.currentTimeMillis()
 
         if (customTime > currentTime) {
-            val data = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
+            val data = Data.Builder().putInt(NOTIFICATION_ID, 0)
+                .putString("Nombre",binding.etNombreR.text.toString())
+                .putString("Monto",binding.etMontoR.text.toString()).build()
+
             val delay = customTime - currentTime
             scheduleNotification(delay, data)
 
@@ -165,9 +168,11 @@ class AgregarRecordatori : AppCompatActivity() {
     }
 
     private fun scheduleNotification(delay: Long, data: Data) {
-        val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data).build()
 
+        val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
+            .setInputData(data)
+            .build()
         val instanceWorkManager = WorkManager.getInstance(this)
         instanceWorkManager.beginUniqueWork(
             NOTIFICATION_WORK,

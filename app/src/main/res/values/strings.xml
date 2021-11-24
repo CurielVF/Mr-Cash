@@ -19,7 +19,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="notification_title">Mr.Cash</string>
-    <string name="notification_subtitle">Tienes un pago que hacer!</string>
+    <string name="notification_subtitle">¡Tienes un pago que hacer!</string>
 
     <string name="notification_schedule_title">Notificacion programada para:\u00a0</string>
     <string name="notification_schedule_pattern">dd.MM.yy \u00B7 HH:mm</string>
