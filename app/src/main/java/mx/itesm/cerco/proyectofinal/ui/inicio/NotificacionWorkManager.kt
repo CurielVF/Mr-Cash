@@ -61,7 +61,7 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
             applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         val bitmap = applicationContext.vectorToBitmap(R.drawable.logo_mr_cash_cuadro)
-        val titleNotification = nombre
+        val titleNotification = "Pago \""+nombre+"\""
         val subtitleNotification = "¡Tienes un pago de $" +monto+" que hacer!"
         val pendingIntent = getActivity(applicationContext, numeroNotificaciones, intent, 0)
         val notification = Builder(applicationContext, NOTIFICATION_CHANNEL)
