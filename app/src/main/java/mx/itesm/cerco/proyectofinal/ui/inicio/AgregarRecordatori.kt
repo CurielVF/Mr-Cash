@@ -72,10 +72,10 @@ class AgregarRecordatori : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun configurarEventos() {
 
-        binding.btnAgregarRecordatorio.setOnClickListener({
+        binding.btnAgregarRecordatorio.setOnClickListener {
             agregarRecordatorio()
             userInterface()
-        })
+        }
 
         opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
