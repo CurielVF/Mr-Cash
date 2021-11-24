@@ -46,7 +46,7 @@
                 android:inputType="textPersonName"
                 android:maxLength="20"
                 android:textAlignment="center"
-                android:hint="Seleccionar nombre"/>
+                android:hint="Ingresar nombre"/>
 
             <TextView
                 android:id="@+id/tvNombreRecordatorio"
@@ -68,7 +68,7 @@
                 android:inputType="numberDecimal"
                 android:maxLength="15"
                 android:textAlignment="center"
-                android:hint="Seleccionar monto"/>
+                android:hint="Ingresar monto"/>
 
             <TextView
                 android:id="@+id/textView6"
@@ -78,6 +78,15 @@
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <DatePicker
+                android:id="@+id/date_p"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp" />
 
             <EditText
                 android:id="@+id/etFechaMeta"

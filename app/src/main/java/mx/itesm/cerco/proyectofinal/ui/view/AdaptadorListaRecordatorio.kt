@@ -52,6 +52,7 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
     class RecordatorioViewHolder(vista : View,context:Context) : RecyclerView.ViewHolder(vista) {
         private val tvNombrePago=vista.findViewById<TextView>(R.id.tvNombreRecordatorio)
         private val tvFecha = vista.findViewById<TextView>(R.id.tvFechaRecordatorio)
+        private val tvHora = vista.findViewById<TextView>(R.id.tvHoraRecordatorio)
         private val tvMonto = vista.findViewById<TextView>(R.id.tvMontoRecordatorio)
         private val btnEliminar = vista.findViewById<ImageButton>(R.id.btnEliminarRecordatorio)
         private val context=context
@@ -79,6 +80,7 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
             }
             tvNombrePago.text = recordatorio.nombrePago
             tvFecha.text = "Fecha de pago: " + recordatorio.fechaPago
+            tvHora.text = "Hora de pago: " + recordatorio.hora
             tvMonto.text = "Monto a pagar: $" + String.format("%.2f", recordatorio.cantidadPago)
         }
     }
