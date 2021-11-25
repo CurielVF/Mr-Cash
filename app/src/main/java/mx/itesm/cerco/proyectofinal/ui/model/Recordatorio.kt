@@ -9,4 +9,5 @@ data class Recordatorio(
     var tipo: String?,
     var hora: String?,
     var id: String?=null,
-    var uuidRecordatorio: String? = null)
+    var uuidRecordatorio: String? = null,
+    var frecuencia: String?)

@@ -99,15 +99,15 @@ RecordatorioFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 recordatorios.clear()
                 for(registro in snapshot.children) {
-                    val llaveRecordatorio = registro.key
                     val nombre = registro.child("nombrePago").getValue(String::class.java)
                     val fechaLimite = registro.child("fechaPago").getValue(String::class.java)
                     val precio = registro.child("cantidadPago").getValue(Double::class.java)
                     val tipo = registro.child("tipo").getValue(String::class.java)
                     val hora = registro.child("hora").getValue(String::class.java)
                     val uuid = registro.child("uuidRecordatorio").getValue(String::class.java)
+                    val frecuencia = registro.child("frecuencia").getValue(String::class.java)
                     val id = registro.key
-                    recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id,uuid))
+                    recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id,uuid,frecuencia))
                 }
 
                 inicioViewModel.setRecordatorios(recordatorios)

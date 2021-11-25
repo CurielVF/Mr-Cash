@@ -29,7 +29,7 @@ class AgregarRecordatori : AppCompatActivity() {
     private lateinit var key: String
     private lateinit var uuidRecordatorio: String
     var numeroNotificaciones = 0;
-
+    private lateinit var frecuencia: String
     @RequiresApi(Build.VERSION_CODES.O)
     lateinit var opcionTipo: Spinner
     lateinit var tipoRecordatorio: String
@@ -65,8 +65,8 @@ class AgregarRecordatori : AppCompatActivity() {
     private fun configurarEventos() {
 
         binding.btnAgregarRecordatorio.setOnClickListener {
-            userInterface()
             agregarRecordatorio()
+            userInterface()
         }
 
         opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -83,7 +83,12 @@ class AgregarRecordatori : AppCompatActivity() {
     private fun agregarRecordatorio() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val database = FirebaseDatabase.getInstance()
-
+        if (!binding.cbMensual.isChecked){
+            frecuencia="Unico"
+        }
+        else{
+            frecuencia="Mensual"
+        }
         val customCalendar = Calendar.getInstance()
         customCalendar.set(
             binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
@@ -106,7 +111,7 @@ class AgregarRecordatori : AppCompatActivity() {
             val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
             val hora = binding.etHora.text.toString()
-            val recordatorio = Recordatorio(nombre, fecha, monto, tipo, hora, null, uuidRecordatorio )
+            val recordatorio = Recordatorio(nombre, fecha, monto, tipo, hora, null,null, frecuencia )
             myRef.setValue(recordatorio)
             super.onBackPressed();
         } catch (e: Exception) {
@@ -128,6 +133,8 @@ class AgregarRecordatori : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         val titleNotification = getString(mx.itesm.cerco.proyectofinal.R.string.notification_title)
         binding.collapsingToolbarL.title = titleNotification
+
+
         val customCalendar = Calendar.getInstance()
         customCalendar.set(
             binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
@@ -139,9 +146,12 @@ class AgregarRecordatori : AppCompatActivity() {
         if (customTime > currentTime) {
             val data = Data.Builder().putInt(NOTIFICATION_ID, 0)
                 .putString("Nombre",binding.etNombreR.text.toString())
-                .putString("Monto",binding.etMontoR.text.toString()).build()
+                .putString("Monto",binding.etMontoR.text.toString())
+                .putString("Frecuencia",frecuencia)
+                .putString("Llave",key).build()
 
             val delay = customTime - currentTime
+            println("delayOG"+delay.toString())
             scheduleNotification(delay, data)
 
             val titleNotificationSchedule = getString(mx.itesm.cerco.proyectofinal.R.string.notification_schedule_title)
@@ -160,35 +170,24 @@ class AgregarRecordatori : AppCompatActivity() {
     }
 
     private fun scheduleNotification(delay: Long, data: Data) {
-        println("boton"+binding.cbMensual.isChecked)
-        if (!binding.cbMensual.isChecked){
-            print("diario")
 
-            val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
-                .build()
-            val instanceWorkManager = WorkManager.getInstance(this)
-            instanceWorkManager.beginUniqueWork(
-                notificationWork.id.toString(),
-                androidx.work.ExistingWorkPolicy.APPEND, notificationWork
-            ).enqueue()
-            uuidRecordatorio = notificationWork.id.toString()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
+            .addTag(key)
+            .build()
+        val instanceWorkManager = WorkManager.getInstance(this)
+        instanceWorkManager.beginUniqueWork(
+            notificationWork.id.toString(),
+            androidx.work.ExistingWorkPolicy.APPEND, notificationWork
+        ).enqueue()
 
-        }
-        else{
-            print("mensual")
-            val notificationWork = PeriodicWorkRequest.Builder(NotificacionWorkManager::class.java,30, TimeUnit.SECONDS)
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
-                .build()
-
-            val instanceWorkManager = WorkManager.getInstance(this)
-            instanceWorkManager.enqueueUniquePeriodicWork(
-                notificationWork.id.toString(),
-                ExistingPeriodicWorkPolicy.REPLACE, notificationWork)
-            uuidRecordatorio = notificationWork.id.toString()
-        }
-
-
+        uuidRecordatorio = notificationWork.id.toString()
+        val uuid = notificationWork.id.toString()
+        val database = FirebaseDatabase.getInstance()
+        val urlRecordatorios = uid+"/Recordatorios/"+key
+        val myRef =database.getReference(urlRecordatorios+"/uuidRecordatorio")
+        myRef.setValue(uuid)
 
     }
 

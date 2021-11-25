@@ -1,8 +1,6 @@
 package mx.itesm.cerco.proyectofinal.ui.inicio
 
 import android.content.Context
-import androidx.work.Worker
-import androidx.work.WorkerParameters
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
@@ -22,34 +20,39 @@ import android.os.Build.VERSION_CODES.O
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat.*
 import androidx.work.ListenableWorker.Result.success
-import androidx.work.WorkManager
 import mx.itesm.cerco.proyectofinal.LLAVE_NOTIFICACION
 import mx.itesm.cerco.proyectofinal.MainActivity
 import mx.itesm.cerco.proyectofinal.PREFS_NOTIFICACION
 import mx.itesm.cerco.proyectofinal.R
-import java.text.SimpleDateFormat
 import java.util.*
-import android.R.id
-
-
-
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.work.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import java.lang.Math.abs
+import java.util.concurrent.TimeUnit
 
 
 class NotificacionWorkManager (val context: Context, params: WorkerParameters) : Worker(context, params){
 
     lateinit var subtitleNot: String
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun doWork(): Result {
         val id = inputData.getLong(NOTIFICATION_ID, 0).toInt()
         val nombre = inputData.getString("Nombre").toString()
         val monto = inputData.getString("Monto").toString()
-        sendNotification(id,nombre,monto)
+        val frecuencia = inputData.getString("Frecuencia").toString()
+        val llave = inputData.getString("Llave").toString()
+        sendNotification(id,nombre,monto,frecuencia,llave)
 
         return success()
     }
     private fun setSubtitle(subtitle: String) {
         subtitleNot = subtitle
     }
-    private fun sendNotification(id: Int,nombre: String,monto: String) {
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun sendNotification(id: Int, nombre: String, monto: String, Frecuencia: String,Llave: String) {
 
         val preferencias = context.getSharedPreferences(PREFS_NOTIFICACION, AppCompatActivity.MODE_PRIVATE)
         var numeroNotificaciones= preferencias.getInt(LLAVE_NOTIFICACION,0)
@@ -100,6 +103,77 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
 
 
         notificationManager.notify(idNot, notification.build())
+        if (Frecuencia == "Mensual"){
+            userInterface(nombre,monto,Llave)
+
+        }
+
+    }
+    private fun scheduleNotification(delay: Long, data: Data, customCalendar: Calendar,llave: String) {
+        println("tag aaifnado"+tags.first())
+        val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
+            .addTag(llave)
+            .build()
+        val instanceWorkManager = WorkManager.getInstance(context)
+        instanceWorkManager.beginUniqueWork(
+            notificationWork.id.toString(),
+            androidx.work.ExistingWorkPolicy.APPEND, notificationWork
+        ).enqueue()
+        val uuid = notificationWork.id.toString()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val database = FirebaseDatabase.getInstance()
+        val urlRecordatorios = uid+"/Recordatorios/"+llave
+        println("url: "+urlRecordatorios)
+        var myRef =database.getReference(urlRecordatorios+"/uuidRecordatorio")
+        myRef.setValue(uuid)
+        val dia:String = customCalendar.get(Calendar.DAY_OF_MONTH).toString()
+        val mes:String = (customCalendar.get(Calendar.MONTH) + 1).toString()
+        val año:String = customCalendar.get(Calendar.YEAR).toString()
+        val hora:String = customCalendar.get(Calendar.HOUR_OF_DAY).toString()
+        val minuto:String = customCalendar.get(Calendar.MINUTE).toString()
+        val myRefFecha =database.getReference(urlRecordatorios+"/fechaPago")
+        myRefFecha.setValue(dia+"/"+mes+"/"+año)
+        val myRefHora =database.getReference(urlRecordatorios+"/hora")
+        myRefHora.setValue(hora+":"+minuto)
+
+    }
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun userInterface(nombre:String,monto: String,llave: String) {
+
+
+        val customCalendar = Calendar.getInstance()
+        customCalendar.set(
+            customCalendar.get(Calendar.YEAR),
+            customCalendar.get(Calendar.MONTH),
+            customCalendar.get(Calendar.DAY_OF_MONTH),
+            customCalendar.get(Calendar.HOUR_OF_DAY),
+            customCalendar.get(Calendar.MINUTE))
+        customCalendar.add(Calendar.MONTH,1)
+
+        val customTime = customCalendar.timeInMillis
+        val currentTime = System.currentTimeMillis()
+
+
+
+        val hora:String = customCalendar.get(Calendar.MONTH).toString()
+        val minuto:String = customCalendar.get(Calendar.DAY_OF_MONTH).toString()
+        val minutoCu:String = customCalendar.get(Calendar.MINUTE).toString()
+        println("Hora"+hora+minuto)
+        println("fragmento")
+        println(currentTime)
+        println(customTime)
+        val data = Data.Builder().putInt(NOTIFICATION_ID, 0)
+            .putString("Nombre",nombre)
+            .putString("Monto",monto)
+            .putString("Frecuencia","Mensual")
+            .putString("Llave",llave)
+            .build()
+        println("frecuencia:")
+        val delay = customTime - currentTime
+        println("delay"+delay.toString())
+        scheduleNotification(delay, data,customCalendar,llave)
+
     }
 
     fun getIntID(): Int {
