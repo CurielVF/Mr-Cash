@@ -74,7 +74,7 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
         val subtitleNotification = "¡Tienes un pago de $" +monto+" que hacer!"
         val pendingIntent = getActivity(applicationContext, numeroNotificaciones, intent, 0)
         val notification = Builder(applicationContext, NOTIFICATION_CHANNEL)
-            .setLargeIcon(bitmap).setSmallIcon(R.drawable.ic_schedule_white)
+            .setLargeIcon(bitmap).setSmallIcon(R.drawable.ic_outline_cash)
             .setContentTitle(titleNotification).setContentText(subtitleNotification)
             .setDefaults(DEFAULT_ALL).setContentIntent(pendingIntent).setAutoCancel(true)
 
