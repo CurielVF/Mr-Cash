@@ -20,13 +20,19 @@ import android.media.RingtoneManager.getDefaultUri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.*
 import androidx.work.ListenableWorker.Result.success
+import androidx.work.WorkManager
 import mx.itesm.cerco.proyectofinal.LLAVE_NOTIFICACION
 import mx.itesm.cerco.proyectofinal.MainActivity
 import mx.itesm.cerco.proyectofinal.PREFS_NOTIFICACION
 import mx.itesm.cerco.proyectofinal.R
+import java.text.SimpleDateFormat
+import java.util.*
+import android.R.id
+
+
+
 
 
 class NotificacionWorkManager (val context: Context, params: WorkerParameters) : Worker(context, params){
@@ -69,6 +75,7 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
             .setContentTitle(titleNotification).setContentText(subtitleNotification)
             .setDefaults(DEFAULT_ALL).setContentIntent(pendingIntent).setAutoCancel(true)
 
+
         notification.priority = PRIORITY_MAX
 
         if (SDK_INT >= O) {
@@ -88,10 +95,24 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
             channel.setSound(ringtoneManager, audioAttributes)
             notificationManager.createNotificationChannel(channel)
         }
+        val idNot = getIntID()
+        println("Idnot: "+idNot.toString())
 
-        notificationManager.notify(id, notification.build())
+
+        notificationManager.notify(idNot, notification.build())
     }
 
+    fun getIntID(): Int {
+        val calendar = Calendar.getInstance()
+        val year: String = calendar.get(Calendar.YEAR).toString()
+        val month: String = calendar.get(Calendar.MONTH).toString()
+        val day: String = calendar.get(Calendar.DAY_OF_MONTH).toString()
+        val hour24hrs = calendar[Calendar.HOUR_OF_DAY]
+        val minutes: String = calendar.get(Calendar.MINUTE).toString()
+        val seconds: String = calendar.get(Calendar.SECOND).toString()
+        val id = month+day+hour24hrs+minutes+seconds
+        return id.toInt()
+    }
     companion object {
         const val NOTIFICATION_ID = "appName_notification_id"
         const val NOTIFICATION_NAME = "appName"
