@@ -110,10 +110,10 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
 
     }
     private fun scheduleNotification(delay: Long, data: Data, customCalendar: Calendar,llave: String) {
-        println("tag aaifnado"+tags.first())
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
         val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
             .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
-            .addTag(llave)
+            .addTag(uid!!)
             .build()
         val instanceWorkManager = WorkManager.getInstance(context)
         instanceWorkManager.beginUniqueWork(
@@ -121,17 +121,16 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
             androidx.work.ExistingWorkPolicy.APPEND, notificationWork
         ).enqueue()
         val uuid = notificationWork.id.toString()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
         val database = FirebaseDatabase.getInstance()
         val urlRecordatorios = uid+"/Recordatorios/"+llave
         println("url: "+urlRecordatorios)
         var myRef =database.getReference(urlRecordatorios+"/uuidRecordatorio")
         myRef.setValue(uuid)
-        val dia:String = customCalendar.get(Calendar.DAY_OF_MONTH).toString()
-        val mes:String = (customCalendar.get(Calendar.MONTH) + 1).toString()
+        val dia:String = customCalendar.get(Calendar.DAY_OF_MONTH).toString().padStart(2, 0.toChar())
+        val mes:String = (customCalendar.get(Calendar.MONTH) + 1).toString().padStart(2, 0.toChar())
         val año:String = customCalendar.get(Calendar.YEAR).toString()
-        val hora:String = customCalendar.get(Calendar.HOUR_OF_DAY).toString()
-        val minuto:String = customCalendar.get(Calendar.MINUTE).toString()
+        val hora:String = customCalendar.get(Calendar.HOUR_OF_DAY).toString().padStart(2, 0.toChar())
+        val minuto = customCalendar.get(Calendar.MINUTE).toString().padStart(2, 0.toChar())
         val myRefFecha =database.getReference(urlRecordatorios+"/fechaPago")
         myRefFecha.setValue(dia+"/"+mes+"/"+año)
         val myRefHora =database.getReference(urlRecordatorios+"/hora")

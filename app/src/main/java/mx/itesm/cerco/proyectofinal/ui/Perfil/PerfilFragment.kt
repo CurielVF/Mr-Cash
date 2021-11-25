@@ -18,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.WorkManager
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -81,6 +82,9 @@ class PerfilFragment : Fragment() {
                         val database = FirebaseDatabase.getInstance()
                         val myRef =database.getReference(uid.toString())
                         myRef.removeValue()
+
+                        val instanceWorkManager = WorkManager.getInstance(requireContext())
+                        instanceWorkManager.cancelAllWorkByTag(uid!!)
                     })
                     // negative button text and action
                     .setNegativeButton("Cancelar", DialogInterface.OnClickListener {

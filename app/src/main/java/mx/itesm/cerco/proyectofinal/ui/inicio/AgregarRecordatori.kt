@@ -174,7 +174,7 @@ class AgregarRecordatori : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
             .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
-            .addTag(key)
+            .addTag(uid!!)
             .build()
         val instanceWorkManager = WorkManager.getInstance(this)
         instanceWorkManager.beginUniqueWork(
