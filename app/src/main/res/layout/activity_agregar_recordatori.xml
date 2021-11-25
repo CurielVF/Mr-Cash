@@ -168,11 +168,13 @@
             </LinearLayout>
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/cbMensual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
                 android:text="Monto mensual"
-                android:theme="@android:style/Theme.Holo.Light"/>
+                android:theme="@android:style/Theme.Holo.Light" />
 
             <Button
                 android:id="@+id/btnAgregarRecordatorio"

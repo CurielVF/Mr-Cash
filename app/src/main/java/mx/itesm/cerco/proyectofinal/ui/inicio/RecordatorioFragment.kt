@@ -6,27 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import mx.itesm.cerco.proyectofinal.Login
-import mx.itesm.cerco.proyectofinal.MainActivity
 import mx.itesm.cerco.proyectofinal.databinding.FragmentInicioBinding
-import mx.itesm.cerco.proyectofinal.ui.model.Meta
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaRecordatorio
-import java.time.LocalDate
-import java.time.Period
-import java.time.temporal.ChronoUnit
+import java.util.*
 
 class
 RecordatorioFragment : Fragment() {
@@ -107,13 +99,15 @@ RecordatorioFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 recordatorios.clear()
                 for(registro in snapshot.children) {
+                    val llaveRecordatorio = registro.key
                     val nombre = registro.child("nombrePago").getValue(String::class.java)
                     val fechaLimite = registro.child("fechaPago").getValue(String::class.java)
                     val precio = registro.child("cantidadPago").getValue(Double::class.java)
                     val tipo = registro.child("tipo").getValue(String::class.java)
                     val hora = registro.child("hora").getValue(String::class.java)
+                    val uuid = registro.child("uuidRecordatorio").getValue(String::class.java)
                     val id = registro.key
-                    recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id))
+                    recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id,uuid))
                 }
 
                 inicioViewModel.setRecordatorios(recordatorios)

@@ -10,10 +10,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.WorkManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import mx.itesm.cerco.proyectofinal.R
+import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
+import java.util.*
+import kotlin.collections.ArrayList
 
 //Proporcionadatos para el RecycleView
 class AdaptadorListaRecordatorio (var arrRecordatorio: ArrayList<Recordatorio>):
@@ -68,6 +72,14 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
                         val database = FirebaseDatabase.getInstance()
                         val myRef =database.getReference(uid+"/Recordatorios/"+recordatorio.id)
                         myRef.removeValue()
+                        println("id recordatorio"+recordatorio.id)
+
+
+                        val uuidRec:UUID = UUID.fromString(recordatorio.uuidRecordatorio)
+                        val instanceWorkManager = WorkManager.getInstance(context)
+
+
+                        instanceWorkManager.cancelWorkById(uuidRec)
                         Toast.makeText(context,"Recordatorio eliminado correctamente", Toast.LENGTH_SHORT).show()
                     })
                     // negative button text and action

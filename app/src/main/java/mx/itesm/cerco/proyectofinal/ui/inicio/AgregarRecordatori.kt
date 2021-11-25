@@ -7,26 +7,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.core.content.edit
-import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import mx.itesm.cerco.proyectofinal.databinding.ActivityAgregarRecordatoriBinding
-import mx.itesm.cerco.proyectofinal.DatePickerFragment
-import mx.itesm.cerco.proyectofinal.LLAVE_NOTIFICACION
-import mx.itesm.cerco.proyectofinal.PREFS_NOTIFICACION
 import mx.itesm.cerco.proyectofinal.ui.estadisticas.TipoRecordatorios
 import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager.Companion.NOTIFICATION_ID
 import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager.Companion.NOTIFICATION_WORK
-import mx.itesm.cerco.proyectofinal.ui.metas.AgregarMeta
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
-import java.io.IOException
 import java.lang.Double
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,7 +26,8 @@ import java.util.concurrent.TimeUnit
 class AgregarRecordatori : AppCompatActivity() {
     private lateinit var binding: ActivityAgregarRecordatoriBinding
     private lateinit var baseDatos: FirebaseDatabase
-
+    private lateinit var key: String
+    private lateinit var uuidRecordatorio: String
     var numeroNotificaciones = 0;
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -73,8 +65,8 @@ class AgregarRecordatori : AppCompatActivity() {
     private fun configurarEventos() {
 
         binding.btnAgregarRecordatorio.setOnClickListener {
-            agregarRecordatorio()
             userInterface()
+            agregarRecordatorio()
         }
 
         opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -105,7 +97,7 @@ class AgregarRecordatori : AppCompatActivity() {
         //Crea el formato del Fecha
         binding.etHora.setText(String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute))
 
-        val key = database.getReference(uid + "/Recordatorios").push().getKey()
+        key = database.getReference(uid + "/Recordatorios").push().getKey().toString()
         val myRef = database.getReference(uid + "/Recordatorios/" + key)
 
         try {
@@ -114,7 +106,7 @@ class AgregarRecordatori : AppCompatActivity() {
             val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
             val hora = binding.etHora.text.toString()
-            val recordatorio = Recordatorio(nombre, fecha, monto, tipo, hora)
+            val recordatorio = Recordatorio(nombre, fecha, monto, tipo, hora, null, uuidRecordatorio )
             myRef.setValue(recordatorio)
             super.onBackPressed();
         } catch (e: Exception) {
@@ -168,16 +160,36 @@ class AgregarRecordatori : AppCompatActivity() {
     }
 
     private fun scheduleNotification(delay: Long, data: Data) {
+        println("boton"+binding.cbMensual.isChecked)
+        if (!binding.cbMensual.isChecked){
+            print("diario")
 
-        val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
-            .setInputData(data)
-            .build()
-        val instanceWorkManager = WorkManager.getInstance(this)
-        instanceWorkManager.beginUniqueWork(
-            NOTIFICATION_WORK,
-            androidx.work.ExistingWorkPolicy.APPEND, notificationWork
-        ).enqueue()
+            val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
+                .build()
+            val instanceWorkManager = WorkManager.getInstance(this)
+            instanceWorkManager.beginUniqueWork(
+                notificationWork.id.toString(),
+                androidx.work.ExistingWorkPolicy.APPEND, notificationWork
+            ).enqueue()
+            uuidRecordatorio = notificationWork.id.toString()
+
+        }
+        else{
+            print("mensual")
+            val notificationWork = PeriodicWorkRequest.Builder(NotificacionWorkManager::class.java,30, TimeUnit.SECONDS)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
+                .build()
+
+            val instanceWorkManager = WorkManager.getInstance(this)
+            instanceWorkManager.enqueueUniquePeriodicWork(
+                notificationWork.id.toString(),
+                ExistingPeriodicWorkPolicy.REPLACE, notificationWork)
+            uuidRecordatorio = notificationWork.id.toString()
+        }
+
+
+
     }
 
 }
