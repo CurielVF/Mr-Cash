@@ -82,14 +82,14 @@
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 android:maxLength="20"
-                android:hint="Seleccionar nombre"/>
+                android:hint="Ingresar nombre"/>
 
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Monto"
+                android:text="Monto ($)"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -105,7 +105,7 @@
                 android:inputType="numberDecimal"
                 android:textAlignment="center"
                 android:maxLength="12"
-                android:hint="Seleccionar monto"
+                android:hint="Ingresar monto"
                 />
 
             <TextView

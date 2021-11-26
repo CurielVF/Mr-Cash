@@ -67,6 +67,7 @@
         <entry key="app/src/main/res/layout/activity_agregar_recordatori.xml" value="0.17447916666666666" />
         <entry key="app/src/main/res/layout/fragment_detalle_meta.xml" value="0.11879432624113476" />
         <entry key="app/src/main/res/layout/fragment_metas.xml" value="0.1766304347826087" />
+        <entry key="app/src/main/res/layout/renglon_tip.xml" value="0.11879432624113476" />
       </map>
     </option>
   </component>
