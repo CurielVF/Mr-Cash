@@ -3,19 +3,24 @@ package mx.itesm.cerco.proyectofinal.ui.view
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.WorkManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import mx.itesm.cerco.proyectofinal.R
+import mx.itesm.cerco.proyectofinal.ui.Constantes
 import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -58,7 +63,10 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
         private val tvFecha = vista.findViewById<TextView>(R.id.tvFechaRecordatorio)
         private val tvHora = vista.findViewById<TextView>(R.id.tvHoraRecordatorio)
         private val tvMonto = vista.findViewById<TextView>(R.id.tvMontoRecordatorio)
+        private val tvFrecuencia = vista.findViewById<TextView>(R.id.tvFrecuencia)
         private val btnEliminar = vista.findViewById<ImageButton>(R.id.btnEliminarRecordatorio)
+        private val cvRecordatorio = vista.findViewById<CardView>(R.id.cvRecordatorio)
+
         private val context=context
         fun set(recordatorio : Recordatorio){
             btnEliminar.setOnClickListener {
@@ -90,10 +98,28 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
                 alert.setTitle("Advertencia")
                 alert.show()
             }
+            val colorFrecuencia = obtenerFrecuenciaColor(recordatorio.frecuencia!!)
+            cvRecordatorio.setCardBackgroundColor(Color.parseColor(colorFrecuencia))
             tvNombrePago.text = recordatorio.nombrePago
             tvFecha.text = "Fecha de pago: " + recordatorio.fechaPago
             tvHora.text = "Hora de pago: " + recordatorio.hora
             tvMonto.text = "Monto a pagar: $" + String.format("%.2f", recordatorio.cantidadPago)
+            tvFrecuencia.text = "Frecuencia: " + if (recordatorio.frecuencia == "Unico") "Única ocasión" else "Mensual"
+        }
+
+        private fun obtenerFrecuenciaColor(
+            frecuencia: String
+        ): String? {
+            var colorFrecuencia = Constantes.color_unico
+            if(frecuencia == "Unico"){
+                colorFrecuencia = Constantes.color_unico
+            }
+            else{
+                colorFrecuencia = Constantes.color_mensual
+            }
+
+            return colorFrecuencia
+
         }
     }
 }

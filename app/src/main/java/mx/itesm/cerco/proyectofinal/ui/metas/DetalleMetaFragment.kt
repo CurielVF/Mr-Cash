@@ -144,6 +144,16 @@ class DetalleMetaFragment : Fragment() {
             estadoMeta = "Completado"
             colorEstado = Constantes.color_completado
             montoReal = args.meta.precio!!
+            binding.tvAgregarMonto.visibility = View.INVISIBLE
+            binding.etAgregarMontoMeta.visibility = View.INVISIBLE
+            binding.btnAgregarMontoMeta.visibility = View.INVISIBLE
+            binding.btnMonto10Meta.visibility = View.INVISIBLE
+            binding.btnMonto50Meta.visibility = View.INVISIBLE
+            binding.btnMonto100Meta.visibility = View.INVISIBLE
+            binding.btnMonto500Meta.visibility = View.INVISIBLE
+            binding.btnMonto1000Meta.visibility = View.INVISIBLE
+            binding.btnMonto10000Meta.visibility = View.INVISIBLE
+
             binding.etAgregarMontoMeta.isEnabled = false
             binding.btnAgregarMontoMeta.isEnabled = false
             binding.btnMonto10Meta.isEnabled = false

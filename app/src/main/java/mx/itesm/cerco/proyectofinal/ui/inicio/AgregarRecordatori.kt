@@ -96,7 +96,7 @@ class AgregarRecordatori : AppCompatActivity() {
             binding.timeP.hour, binding.timeP.minute, 0
         )
         //Crea el formato del Fecha
-        val format = SimpleDateFormat("dd/MM/yyyy")
+        val format = SimpleDateFormat("yyyy-MM-dd")
         val strDate = format.format(customCalendar.time)
         binding.etFecha.setText(strDate)
 

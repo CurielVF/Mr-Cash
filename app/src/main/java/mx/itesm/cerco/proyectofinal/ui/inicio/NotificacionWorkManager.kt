@@ -31,6 +31,7 @@ import androidx.work.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.lang.Math.abs
+import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 
@@ -126,13 +127,12 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
         println("url: "+urlRecordatorios)
         var myRef =database.getReference(urlRecordatorios+"/uuidRecordatorio")
         myRef.setValue(uuid)
-        val dia:String = customCalendar.get(Calendar.DAY_OF_MONTH).toString().padStart(2, 0.toChar())
-        val mes:String = (customCalendar.get(Calendar.MONTH) + 1).toString().padStart(2, 0.toChar())
-        val año:String = customCalendar.get(Calendar.YEAR).toString()
+        val format = SimpleDateFormat("yyyy-MM-dd")
+        val strDate = format.format(customCalendar.time)
         val hora:String = customCalendar.get(Calendar.HOUR_OF_DAY).toString().padStart(2, 0.toChar())
         val minuto = customCalendar.get(Calendar.MINUTE).toString().padStart(2, 0.toChar())
         val myRefFecha =database.getReference(urlRecordatorios+"/fechaPago")
-        myRefFecha.setValue(dia+"/"+mes+"/"+año)
+        myRefFecha.setValue(strDate)
         val myRefHora =database.getReference(urlRecordatorios+"/hora")
         myRefHora.setValue(hora+":"+minuto)
 
