@@ -34,12 +34,12 @@ class AgregarMeta : AppCompatActivity() {
     lateinit var resultadoTipo: String
     var opcionesTipos = arrayOf(
         TiposMetas.COMIDA,
-        TiposMetas.EDUCACION,
+        TiposMetas.EDUCACIÓN,
         TiposMetas.ENTRETENIMIENTO,
         TiposMetas.HOGAR,
         TiposMetas.PERSONAL,
         TiposMetas.SALUD,
-        TiposMetas.VEHICULO,
+        TiposMetas.VEHÍCULO,
         TiposMetas.VIAJES,
         TiposMetas.OTRO
     )
@@ -81,10 +81,10 @@ class AgregarMeta : AppCompatActivity() {
                     "COMIDA" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_comida)
                     "OTRO" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_otro)
                     "PERSONAL" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_personal)
-                    "VEHICULO" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_vehiculo)
+                    "VEHÍCULO" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_vehiculo)
                     "VIAJES" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_viaje)
                     "SALUD" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_salud)
-                    "EDUCACION" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_educacion)
+                    "EDUCACIÓN" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_educacion)
                 }
             }
 

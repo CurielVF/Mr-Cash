@@ -166,15 +166,18 @@
                     android:padding="20dp" />
 
             </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/cbMensual"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:text="Monto mensual"
-                android:theme="@android:style/Theme.Holo.Light" />
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/cbMensual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Monto mensual" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnAgregarRecordatorio"
@@ -184,6 +187,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="80dp"
                 android:layout_marginBottom="22dp"
+                android:backgroundTint="#2F3E46"
                 android:text="Agregar" />
 
         </LinearLayout>
