@@ -66,8 +66,21 @@ class AgregarRecordatori : AppCompatActivity() {
     private fun configurarEventos() {
 
         binding.btnAgregarRecordatorio.setOnClickListener {
-            agregarRecordatorio()
-            userInterface()
+            if(validarFecha()){
+                agregarRecordatorio()
+            }
+            else{
+                try {
+                    Double.parseDouble(binding.etMontoR.text.toString())
+                } catch (e: NumberFormatException) {
+                    binding.etMontoR.setError("Monto inválido")
+                }
+                if (binding.etNombreR.text.toString().isBlank()) {
+                    binding.etNombreR.setError("Nombre inválido")
+                }
+                Toast.makeText(baseContext, "Fecha y hora no validas", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -78,6 +91,19 @@ class AgregarRecordatori : AppCompatActivity() {
                 println("Selecciona una opción")
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun validarFecha(): Boolean {
+        val customCalendar = Calendar.getInstance()
+        customCalendar.set(
+            binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
+            binding.timeP.hour, binding.timeP.minute, 0
+        )
+        val customTime = customCalendar.timeInMillis
+        val currentTime = System.currentTimeMillis()
+
+        return customTime > currentTime
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -98,10 +124,10 @@ class AgregarRecordatori : AppCompatActivity() {
         //Crea el formato del Fecha
         val format = SimpleDateFormat("yyyy-MM-dd")
         val strDate = format.format(customCalendar.time)
-        binding.etFecha.setText(strDate)
+        //binding.etFecha.setText(strDate)
 
         //Crea el formato del Fecha
-        binding.etHora.setText(String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute))
+        //binding.etHora.setText(String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute))
 
         key = database.getReference(uid + "/Recordatorios").push().getKey().toString()
         val myRef = database.getReference(uid + "/Recordatorios/" + key)
@@ -109,11 +135,11 @@ class AgregarRecordatori : AppCompatActivity() {
         try {
             val nombre = binding.etNombreR.text.toString()
             val monto = binding.etMontoR.text.toString().toDouble()
-            val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
-            val hora = binding.etHora.text.toString()
-            val recordatorio = Recordatorio(nombre, fecha, monto, tipo, hora, null,null, frecuencia )
+            val hora = String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute)
+            val recordatorio = Recordatorio(nombre, strDate, monto, tipo, hora, null,null, frecuencia )
             myRef.setValue(recordatorio)
+            userInterface()
             super.onBackPressed();
         } catch (e: Exception) {
             try {
@@ -133,7 +159,7 @@ class AgregarRecordatori : AppCompatActivity() {
     private fun userInterface() {
         setSupportActionBar(binding.toolbar)
         val titleNotification = getString(mx.itesm.cerco.proyectofinal.R.string.notification_title)
-        binding.collapsingToolbarL.title = titleNotification
+        //binding.collapsingToolbarL.title = titleNotification
 
 
         val customCalendar = Calendar.getInstance()
@@ -152,7 +178,6 @@ class AgregarRecordatori : AppCompatActivity() {
                 .putString("Llave",key).build()
 
             val delay = customTime - currentTime
-            println("delayOG"+delay.toString())
             scheduleNotification(delay, data)
 
             val titleNotificationSchedule = getString(mx.itesm.cerco.proyectofinal.R.string.notification_schedule_title)

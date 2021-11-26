@@ -128,13 +128,13 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
         var myRef =database.getReference(urlRecordatorios+"/uuidRecordatorio")
         myRef.setValue(uuid)
         val format = SimpleDateFormat("yyyy-MM-dd")
+        val formatHour = SimpleDateFormat("HH:mm")
         val strDate = format.format(customCalendar.time)
-        val hora:String = customCalendar.get(Calendar.HOUR_OF_DAY).toString().padStart(2, 0.toChar())
-        val minuto = customCalendar.get(Calendar.MINUTE).toString().padStart(2, 0.toChar())
+        val hora:String = formatHour.format(customCalendar.time)
         val myRefFecha =database.getReference(urlRecordatorios+"/fechaPago")
         myRefFecha.setValue(strDate)
         val myRefHora =database.getReference(urlRecordatorios+"/hora")
-        myRefHora.setValue(hora+":"+minuto)
+        myRefHora.setValue(hora)
 
     }
     @RequiresApi(Build.VERSION_CODES.M)

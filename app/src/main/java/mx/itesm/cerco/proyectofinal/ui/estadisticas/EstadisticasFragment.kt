@@ -190,7 +190,7 @@ class EstadisticasFragment : Fragment() {
                                 datosEstadistica.add(ValueDataEntry(tipo, monto))
                             }
 
-                            crearGrafica("recordatorios")
+                            crearGrafica("tipo de recordatorios")
                         }
 
                     }

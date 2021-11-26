@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener
 import mx.itesm.cerco.proyectofinal.databinding.FragmentInicioBinding
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaRecordatorio
+import java.text.SimpleDateFormat
 import java.util.*
 
 class
@@ -107,7 +108,26 @@ RecordatorioFragment : Fragment() {
                     val uuid = registro.child("uuidRecordatorio").getValue(String::class.java)
                     val frecuencia = registro.child("frecuencia").getValue(String::class.java)
                     val id = registro.key
+                    var delay:Long = (0.0).toLong()
+                    try {
+                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:ss")
+                        val date = sdf.parse(fechaLimite+" "+hora)
+                        val cal = Calendar.getInstance()
+                        cal.time = date
+
+                        val customTime = cal.timeInMillis
+                        val currentTime = System.currentTimeMillis()
+                        delay = customTime - currentTime
+                    }
+                    catch (e:Exception){
+
+                    }
+
+                    print("delay:" + delay)
+                    if (delay >= 0){
+                   }
                     recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id,uuid,frecuencia))
+
                 }
                 val recordatoriosOrdenados = recordatorios
                     .sortedWith( compareBy({ it.fechaPago }, { it.hora}) )

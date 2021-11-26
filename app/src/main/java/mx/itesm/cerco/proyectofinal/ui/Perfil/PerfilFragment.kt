@@ -65,10 +65,26 @@ class PerfilFragment : Fragment() {
 
     private fun configurarEventos() {
         binding.btnLogout.setOnClickListener{
-            mAuth.signOut()
-            AuthUI.getInstance().signOut(requireContext())
-            val intLogin = Intent(context, Login::class.java)
-            startActivity(intLogin)
+            val dialogBuilder = AlertDialog.Builder(context)
+
+            dialogBuilder.setMessage("¿Estás seguro de que quieres cerrar sesión?")
+                .setCancelable(false)
+                .setPositiveButton("Aceptar", DialogInterface.OnClickListener {
+                        dialog, id ->
+                    mAuth.signOut()
+                    AuthUI.getInstance().signOut(requireContext())
+                    val intLogin = Intent(context, Login::class.java)
+                    startActivity(intLogin)
+                })
+                // negative button text and action
+                .setNegativeButton("Cancelar", DialogInterface.OnClickListener {
+                        dialog, id -> dialog.cancel()
+                })
+            val alert = dialogBuilder.create()
+            alert.setTitle("Advertencia")
+            alert.show()
+
+
         }
 
         binding.btnBorrarDatos.setOnClickListener{

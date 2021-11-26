@@ -19,6 +19,7 @@ import mx.itesm.cerco.proyectofinal.R
 import mx.itesm.cerco.proyectofinal.ui.Constantes
 import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
+import java.lang.Exception
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import java.util.*
@@ -82,12 +83,15 @@ RecyclerView.Adapter<AdaptadorListaRecordatorio.RecordatorioViewHolder>()
                         myRef.removeValue()
                         println("id recordatorio"+recordatorio.id)
 
+                        try {
+                            val uuidRec:UUID = UUID.fromString(recordatorio.uuidRecordatorio)
+                            val instanceWorkManager = WorkManager.getInstance(context)
+                            instanceWorkManager.cancelWorkById(uuidRec)
+                        }
+                        catch (e: Exception){
 
-                        val uuidRec:UUID = UUID.fromString(recordatorio.uuidRecordatorio)
-                        val instanceWorkManager = WorkManager.getInstance(context)
+                        }
 
-
-                        instanceWorkManager.cancelWorkById(uuidRec)
                         Toast.makeText(context,"Recordatorio eliminado correctamente", Toast.LENGTH_SHORT).show()
                     })
                     // negative button text and action
