@@ -178,14 +178,8 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
 
     fun getIntID(): Int {
         val calendar = Calendar.getInstance()
-        val year: String = calendar.get(Calendar.YEAR).toString()
-        val month: String = calendar.get(Calendar.MONTH).toString()
-        val day: String = calendar.get(Calendar.DAY_OF_MONTH).toString()
-        val hour24hrs = calendar[Calendar.HOUR_OF_DAY]
-        val minutes: String = calendar.get(Calendar.MINUTE).toString()
-        val seconds: String = calendar.get(Calendar.SECOND).toString()
-        val id = month+day+hour24hrs+minutes+seconds
-        return id.toInt()
+        calendar.timeInMillis
+        return calendar.timeInMillis.toInt()
     }
     companion object {
         const val NOTIFICATION_ID = "appName_notification_id"
