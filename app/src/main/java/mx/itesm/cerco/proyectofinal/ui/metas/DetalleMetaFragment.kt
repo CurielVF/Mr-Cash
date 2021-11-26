@@ -58,8 +58,8 @@ class DetalleMetaFragment : Fragment() {
         montoReal = args.meta.montoReal!!
         binding.tvNombreMetaDetalle.text=args.meta.nombre.toString()
         binding.tvFechaMetaDetalle.text=args.meta.fechaLimite.toString()
-        binding.tvMontoMetaDetalle.text=args.meta.precio.toString()
-        binding.tvMontoRealMetaDetalle.text=montoReal.toString()
+        binding.tvMontoMetaDetalle.text="$"+String.format("%.2f",args.meta.precio)
+        binding.tvMontoRealMetaDetalle.text="$"+String.format("%.2f",montoReal)
         obtenerEstadoMeta()
 
         binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
@@ -104,6 +104,7 @@ class DetalleMetaFragment : Fragment() {
         binding.btnAgregarMontoMeta.setOnClickListener {
             if (!binding.etAgregarMontoMeta.text.toString().isBlank() && binding.etAgregarMontoMeta.text.toString() != "."){
                 nuevoMonto = String.format("%.2f",binding.etAgregarMontoMeta.text.toString().toDouble()).toDouble()
+
             }
             else{
                 nuevoMonto = 0.0
@@ -115,7 +116,7 @@ class DetalleMetaFragment : Fragment() {
             binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
             obtenerEstadoMeta()
             myRef.setValue(montoReal)
-            binding.tvMontoRealMetaDetalle.text=montoReal.toString()
+            binding.tvMontoRealMetaDetalle.text="$"+String.format("%.2f",montoReal)
             binding.etAgregarMontoMeta.setText("")
             nuevoMonto = 0.0
         }
