@@ -95,6 +95,8 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
                 "PERSONAL" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_personal)
                 "VEHICULO" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_vehiculo)
                 "VIAJES" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_viaje)
+                "SALUD" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_salud)
+                "EDUCACION" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_educacion)
                 else -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_otro)
             }
 

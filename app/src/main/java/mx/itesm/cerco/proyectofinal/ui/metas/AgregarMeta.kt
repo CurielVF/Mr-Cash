@@ -33,10 +33,12 @@ class AgregarMeta : AppCompatActivity() {
     lateinit var opcionTipo: Spinner
     lateinit var resultadoTipo: String
     var opcionesTipos = arrayOf(
+        TiposMetas.COMIDA,
+        TiposMetas.EDUCACION,
         TiposMetas.ENTRETENIMIENTO,
         TiposMetas.HOGAR,
-        TiposMetas.COMIDA,
         TiposMetas.PERSONAL,
+        TiposMetas.SALUD,
         TiposMetas.VEHICULO,
         TiposMetas.VIAJES,
         TiposMetas.OTRO
@@ -81,6 +83,8 @@ class AgregarMeta : AppCompatActivity() {
                     "PERSONAL" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_personal)
                     "VEHICULO" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_vehiculo)
                     "VIAJES" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_viaje)
+                    "SALUD" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_salud)
+                    "EDUCACION" -> binding.ivAgregarTipoMeta.setImageResource(mx.itesm.cerco.proyectofinal.R.drawable.ic_tipo_educacion)
                 }
             }
 

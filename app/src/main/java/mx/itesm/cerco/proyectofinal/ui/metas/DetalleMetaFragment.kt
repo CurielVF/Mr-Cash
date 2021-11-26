@@ -73,6 +73,8 @@ class DetalleMetaFragment : Fragment() {
             "PERSONAL" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_personal)
             "VEHICULO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_vehiculo)
             "VIAJES" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_viaje)
+            "EDUCACION" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_educacion)
+            "SALUD" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_salud)
             else -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_otro)
         }
 
