@@ -4,6 +4,7 @@ import android.content.Context
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.getActivity
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
@@ -73,7 +74,7 @@ class NotificacionWorkManager (val context: Context, params: WorkerParameters) :
         val bitmap = applicationContext.vectorToBitmap(R.drawable.logo_mr_cash_cuadro)
         val titleNotification = "Pago \""+nombre+"\""
         val subtitleNotification = "¡Tienes un pago de $" +monto+" que hacer!"
-        val pendingIntent = getActivity(applicationContext, numeroNotificaciones, intent, 0)
+        val pendingIntent = getActivity(applicationContext, numeroNotificaciones, intent, FLAG_MUTABLE)
         val notification = Builder(applicationContext, NOTIFICATION_CHANNEL)
             .setLargeIcon(bitmap).setSmallIcon(R.drawable.ic_outline_cash)
             .setContentTitle(titleNotification).setContentText(subtitleNotification)
