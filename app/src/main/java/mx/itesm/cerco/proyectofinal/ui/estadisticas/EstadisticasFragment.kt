@@ -117,6 +117,7 @@ class EstadisticasFragment : Fragment() {
             if(datosEstadistica.isNotEmpty()) {
                 try {
                     binding.tvNoDatos.visibility=View.INVISIBLE
+                    binding.flNoDatos.visibility=View.INVISIBLE
                     pie.data(datosEstadistica)
                     pie.title("Monto total por " + tipoEstadistica)
 
@@ -128,6 +129,7 @@ class EstadisticasFragment : Fragment() {
             }
             else{
                 binding.tvNoDatos.visibility=View.VISIBLE
+                binding.flNoDatos.visibility=View.VISIBLE
             }
             binding.pbEstadisticas.visibility=View.INVISIBLE
 
@@ -154,7 +156,7 @@ class EstadisticasFragment : Fragment() {
                             datosEstadistica.clear()
                             val numbersMap = mutableMapOf<String, Double>()
                             for (registro in snapshot.children) {
-                                val monto = registro.child("precio").getValue(Double::class.java)
+                                val monto = registro.child("montoReal").getValue(Double::class.java)
                                 val tipo = registro.child("tipo").getValue(String::class.java)
                                 if (numbersMap.containsKey(tipo.toString())) {
                                     numbersMap[tipo.toString()] =
@@ -188,7 +190,7 @@ class EstadisticasFragment : Fragment() {
                                 datosEstadistica.add(ValueDataEntry(tipo, monto))
                             }
 
-                            crearGrafica("recordatorios")
+                            crearGrafica("tipo de recordatorios")
                         }
 
                     }

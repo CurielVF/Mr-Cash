@@ -24,8 +24,7 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
 import android.graphics.drawable.Drawable
-
-
+import java.math.BigDecimal
 
 
 class DetalleMetaFragment : Fragment() {
@@ -43,6 +42,7 @@ class DetalleMetaFragment : Fragment() {
     private var montoReal: Double = 0.0
     private var estadoMeta: String = "En progreso"
     private var colorEstado: String = Constantes.color_progreso
+    private val BIG_DECIMAL_LIMIT: Long = 999999999999
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,8 +58,8 @@ class DetalleMetaFragment : Fragment() {
         montoReal = args.meta.montoReal!!
         binding.tvNombreMetaDetalle.text=args.meta.nombre.toString()
         binding.tvFechaMetaDetalle.text=args.meta.fechaLimite.toString()
-        binding.tvMontoMetaDetalle.text=args.meta.precio.toString()
-        binding.tvMontoRealMetaDetalle.text=montoReal.toString()
+        binding.tvMontoMetaDetalle.text="$ "+String.format("%.2f",args.meta.precio?.toBigDecimal())
+        binding.tvMontoRealMetaDetalle.text="$ "+String.format("%.2f",montoReal.toBigDecimal())
         obtenerEstadoMeta()
 
         binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
@@ -71,8 +71,10 @@ class DetalleMetaFragment : Fragment() {
             "COMIDA" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_comida)
             "OTRO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_otro)
             "PERSONAL" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_personal)
-            "VEHICULO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_vehiculo)
+            "VEHÍCULO" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_vehiculo)
             "VIAJES" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_viaje)
+            "EDUCACIÓN" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_educacion)
+            "SALUD" -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_salud)
             else -> binding.ivTipoDetalleMeta.setImageResource(R.drawable.ic_tipo_otro)
         }
 
@@ -102,6 +104,7 @@ class DetalleMetaFragment : Fragment() {
         binding.btnAgregarMontoMeta.setOnClickListener {
             if (!binding.etAgregarMontoMeta.text.toString().isBlank() && binding.etAgregarMontoMeta.text.toString() != "."){
                 nuevoMonto = String.format("%.2f",binding.etAgregarMontoMeta.text.toString().toDouble()).toDouble()
+
             }
             else{
                 nuevoMonto = 0.0
@@ -113,7 +116,7 @@ class DetalleMetaFragment : Fragment() {
             binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
             obtenerEstadoMeta()
             myRef.setValue(montoReal)
-            binding.tvMontoRealMetaDetalle.text=montoReal.toString()
+            binding.tvMontoRealMetaDetalle.text="$ "+String.format("%.2f",montoReal.toBigDecimal())
             binding.etAgregarMontoMeta.setText("")
             nuevoMonto = 0.0
         }
@@ -133,7 +136,11 @@ class DetalleMetaFragment : Fragment() {
         }
 
         nuevoMonto = nuevoMonto?.plus(saldo)
-        binding.etAgregarMontoMeta.setText(nuevoMonto.toString())
+        if(nuevoMonto?.toLong()!! > BIG_DECIMAL_LIMIT) {
+            nuevoMonto = BIG_DECIMAL_LIMIT.toDouble()
+        }
+
+        binding.etAgregarMontoMeta.setText(nuevoMonto?.toBigDecimal().toString())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -142,6 +149,16 @@ class DetalleMetaFragment : Fragment() {
             estadoMeta = "Completado"
             colorEstado = Constantes.color_completado
             montoReal = args.meta.precio!!
+            binding.tvAgregarMonto.visibility = View.INVISIBLE
+            binding.etAgregarMontoMeta.visibility = View.INVISIBLE
+            binding.btnAgregarMontoMeta.visibility = View.INVISIBLE
+            binding.btnMonto10Meta.visibility = View.INVISIBLE
+            binding.btnMonto50Meta.visibility = View.INVISIBLE
+            binding.btnMonto100Meta.visibility = View.INVISIBLE
+            binding.btnMonto500Meta.visibility = View.INVISIBLE
+            binding.btnMonto1000Meta.visibility = View.INVISIBLE
+            binding.btnMonto10000Meta.visibility = View.INVISIBLE
+
             binding.etAgregarMontoMeta.isEnabled = false
             binding.btnAgregarMontoMeta.isEnabled = false
             binding.btnMonto10Meta.isEnabled = false

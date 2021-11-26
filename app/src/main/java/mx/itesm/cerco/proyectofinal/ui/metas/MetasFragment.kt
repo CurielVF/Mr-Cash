@@ -146,8 +146,8 @@ class MetasFragment : Fragment(), RenglonListener {
                     }
                     metas.add(Meta(nombre,fechaLimite,precio,tipo,periodo,ahorroNecesario,fechaCreacion,montoReal,llaveMeta))
                 }
-
-                metasViewModel.setMetas(metas)
+                val metasOrdenadas = metas.sortedBy { it.fechaLimite }
+                metasViewModel.setMetas(metasOrdenadas)
             }
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")

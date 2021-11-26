@@ -37,10 +37,12 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="99dp"
         android:layout_height="97dp"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAgregarMeta"

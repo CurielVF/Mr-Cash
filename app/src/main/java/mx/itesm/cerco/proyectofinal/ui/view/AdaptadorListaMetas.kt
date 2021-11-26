@@ -93,8 +93,10 @@ class AdaptadorListaMetas (var arrMetas: ArrayList<Meta>):
                 "COMIDA" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_comida)
                 "OTRO" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_otro)
                 "PERSONAL" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_personal)
-                "VEHICULO" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_vehiculo)
+                "VEHÍCULO" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_vehiculo)
                 "VIAJES" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_viaje)
+                "SALUD" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_salud)
+                "EDUCACIÓN" -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_educacion)
                 else -> ivTipoMeta.setImageResource(R.drawable.ic_tipo_otro)
             }
 

@@ -6,27 +6,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import mx.itesm.cerco.proyectofinal.Login
-import mx.itesm.cerco.proyectofinal.MainActivity
 import mx.itesm.cerco.proyectofinal.databinding.FragmentInicioBinding
-import mx.itesm.cerco.proyectofinal.ui.model.Meta
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
 import mx.itesm.cerco.proyectofinal.ui.view.AdaptadorListaRecordatorio
-import java.time.LocalDate
-import java.time.Period
-import java.time.temporal.ChronoUnit
+import java.text.SimpleDateFormat
+import java.util.*
 
 class
 RecordatorioFragment : Fragment() {
@@ -112,11 +105,33 @@ RecordatorioFragment : Fragment() {
                     val precio = registro.child("cantidadPago").getValue(Double::class.java)
                     val tipo = registro.child("tipo").getValue(String::class.java)
                     val hora = registro.child("hora").getValue(String::class.java)
+                    val uuid = registro.child("uuidRecordatorio").getValue(String::class.java)
+                    val frecuencia = registro.child("frecuencia").getValue(String::class.java)
                     val id = registro.key
-                    recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id))
-                }
+                    var delay:Long = (0.0).toLong()
+                    try {
+                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:ss")
+                        val date = sdf.parse(fechaLimite+" "+hora)
+                        val cal = Calendar.getInstance()
+                        cal.time = date
 
-                inicioViewModel.setRecordatorios(recordatorios)
+                        val customTime = cal.timeInMillis
+                        val currentTime = System.currentTimeMillis()
+                        delay = customTime - currentTime
+                    }
+                    catch (e:Exception){
+
+                    }
+
+                    print("delay:" + delay)
+                    if (delay >= 0){
+                   }
+                    recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id,uuid,frecuencia))
+
+                }
+                val recordatoriosOrdenados = recordatorios
+                    .sortedWith( compareBy({ it.fechaPago }, { it.hora}) )
+                inicioViewModel.setRecordatorios(recordatoriosOrdenados)
             }
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")

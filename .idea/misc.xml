@@ -11,7 +11,6 @@
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_main.xml" value="0.2364217252396166" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/detalle_meta_fragment.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/detalle_meta_fragment2.xml" value="0.17552083333333332" />
-
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/estadisticas_detail_fragment.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_detalle_meta.xml" value="0.3333333333333333" />
@@ -63,7 +62,11 @@
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_inicio.xml" value="0.2851851851851852" />
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_metas.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/acerca_de_fragment.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_agregar_meta.xml" value="0.1766304347826087" />
         <entry key="app/src/main/res/layout/activity_agregar_recordatori.xml" value="0.17447916666666666" />
+        <entry key="app/src/main/res/layout/fragment_detalle_meta.xml" value="0.11879432624113476" />
+        <entry key="app/src/main/res/layout/fragment_metas.xml" value="0.1766304347826087" />
       </map>
     </option>
   </component>

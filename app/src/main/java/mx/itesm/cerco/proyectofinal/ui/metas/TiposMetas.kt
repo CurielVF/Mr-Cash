@@ -6,7 +6,9 @@ enum class TiposMetas {
     HOGAR,
     COMIDA,
     PERSONAL,
+    EDUCACIÓN,
+    SALUD,
     VIAJES,
-    VEHICULO,
+    VEHÍCULO,
     OTRO
 }

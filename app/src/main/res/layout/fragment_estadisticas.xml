@@ -6,24 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.estadisticas.EstadisticasFragment">
 
-    <TextView
-        android:id="@+id/tvNoDatos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:text="No cuentas con los datos suficientes para generar una gráfica."
-        android:textAlignment="center"
-        android:textSize="14dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_weight="70"
         android:gravity="center_vertical"
         android:orientation="vertical"
@@ -35,7 +23,7 @@
 
         <Spinner
             android:id="@+id/spOpcionEstadistica"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:padding="20dp" />
@@ -81,6 +69,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/flNoDatos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/tvNoDatos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="90dp"
+            android:text="No cuentas con los datos suficientes para generar una gráfica."
+            android:textAlignment="center"
+            android:textSize="14dp"
+            android:visibility="visible" />
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

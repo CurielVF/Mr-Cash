@@ -7,26 +7,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.core.content.edit
-import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import mx.itesm.cerco.proyectofinal.databinding.ActivityAgregarRecordatoriBinding
-import mx.itesm.cerco.proyectofinal.DatePickerFragment
-import mx.itesm.cerco.proyectofinal.LLAVE_NOTIFICACION
-import mx.itesm.cerco.proyectofinal.PREFS_NOTIFICACION
 import mx.itesm.cerco.proyectofinal.ui.estadisticas.TipoRecordatorios
 import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager.Companion.NOTIFICATION_ID
 import mx.itesm.cerco.proyectofinal.ui.inicio.NotificacionWorkManager.Companion.NOTIFICATION_WORK
-import mx.itesm.cerco.proyectofinal.ui.metas.AgregarMeta
 import mx.itesm.cerco.proyectofinal.ui.model.Recordatorio
-import java.io.IOException
 import java.lang.Double
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,9 +26,10 @@ import java.util.concurrent.TimeUnit
 class AgregarRecordatori : AppCompatActivity() {
     private lateinit var binding: ActivityAgregarRecordatoriBinding
     private lateinit var baseDatos: FirebaseDatabase
-
+    private lateinit var key: String
+    private lateinit var uuidRecordatorio: String
     var numeroNotificaciones = 0;
-
+    private lateinit var frecuencia: String
     @RequiresApi(Build.VERSION_CODES.O)
     lateinit var opcionTipo: Spinner
     lateinit var tipoRecordatorio: String
@@ -67,15 +59,29 @@ class AgregarRecordatori : AppCompatActivity() {
         opcionTipo = binding.sORecordatorioTipo
         opcionTipo.adapter =
             ArrayAdapter<TipoRecordatorios>(this, R.layout.simple_list_item_1, opcionesRecordatorio)
+        binding.dateP.minDate = System.currentTimeMillis() - 1000;
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun configurarEventos() {
 
-        binding.btnAgregarRecordatorio.setOnClickListener({
-            agregarRecordatorio()
-            userInterface()
-        })
+        binding.btnAgregarRecordatorio.setOnClickListener {
+            if(validarFecha()){
+                agregarRecordatorio()
+            }
+            else{
+                try {
+                    Double.parseDouble(binding.etMontoR.text.toString())
+                } catch (e: NumberFormatException) {
+                    binding.etMontoR.setError("Monto inválido")
+                }
+                if (binding.etNombreR.text.toString().isBlank()) {
+                    binding.etNombreR.setError("Nombre inválido")
+                }
+                Toast.makeText(baseContext, "Fecha y hora no validas", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
 
         opcionTipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -87,35 +93,53 @@ class AgregarRecordatori : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun validarFecha(): Boolean {
+        val customCalendar = Calendar.getInstance()
+        customCalendar.set(
+            binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
+            binding.timeP.hour, binding.timeP.minute, 0
+        )
+        val customTime = customCalendar.timeInMillis
+        val currentTime = System.currentTimeMillis()
+
+        return customTime > currentTime
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun agregarRecordatorio() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val database = FirebaseDatabase.getInstance()
-
+        if (!binding.cbMensual.isChecked){
+            frecuencia="Unico"
+        }
+        else{
+            frecuencia="Mensual"
+        }
         val customCalendar = Calendar.getInstance()
         customCalendar.set(
             binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
             binding.timeP.hour, binding.timeP.minute, 0
         )
         //Crea el formato del Fecha
-        val format = SimpleDateFormat("dd/MM/yyyy")
+        val format = SimpleDateFormat("yyyy-MM-dd")
         val strDate = format.format(customCalendar.time)
-        binding.etFecha.setText(strDate)
+        //binding.etFecha.setText(strDate)
 
         //Crea el formato del Fecha
-        binding.etHora.setText(String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute))
+        //binding.etHora.setText(String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute))
 
-        val key = database.getReference(uid + "/Recordatorios").push().getKey()
+        key = database.getReference(uid + "/Recordatorios").push().getKey().toString()
         val myRef = database.getReference(uid + "/Recordatorios/" + key)
 
         try {
             val nombre = binding.etNombreR.text.toString()
             val monto = binding.etMontoR.text.toString().toDouble()
-            val fecha = binding.etFecha.text.toString()
             val tipo = tipoRecordatorio
-            val hora = binding.etHora.text.toString()
-            val recordatorio = Recordatorio(nombre, fecha, monto, tipo, hora)
+            val hora = String.format("%02d:%02d", binding.timeP.hour, binding.timeP.minute)
+            val recordatorio = Recordatorio(nombre, strDate, monto, tipo, hora, null,null, frecuencia )
             myRef.setValue(recordatorio)
+            userInterface()
             super.onBackPressed();
         } catch (e: Exception) {
             try {
@@ -135,7 +159,9 @@ class AgregarRecordatori : AppCompatActivity() {
     private fun userInterface() {
         setSupportActionBar(binding.toolbar)
         val titleNotification = getString(mx.itesm.cerco.proyectofinal.R.string.notification_title)
-        binding.collapsingToolbarL.title = titleNotification
+        //binding.collapsingToolbarL.title = titleNotification
+
+
         val customCalendar = Calendar.getInstance()
         customCalendar.set(
             binding.dateP.year, binding.dateP.month, binding.dateP.dayOfMonth,
@@ -145,7 +171,12 @@ class AgregarRecordatori : AppCompatActivity() {
         val currentTime = System.currentTimeMillis()
 
         if (customTime > currentTime) {
-            val data = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
+            val data = Data.Builder().putInt(NOTIFICATION_ID, 0)
+                .putString("Nombre",binding.etNombreR.text.toString())
+                .putString("Monto",binding.etMontoR.text.toString())
+                .putString("Frecuencia",frecuencia)
+                .putString("Llave",key).build()
+
             val delay = customTime - currentTime
             scheduleNotification(delay, data)
 
@@ -165,14 +196,25 @@ class AgregarRecordatori : AppCompatActivity() {
     }
 
     private fun scheduleNotification(delay: Long, data: Data) {
-        val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data).build()
 
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val notificationWork = OneTimeWorkRequest.Builder(NotificacionWorkManager::class.java)
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS).setInputData(data)
+            .addTag(uid!!)
+            .build()
         val instanceWorkManager = WorkManager.getInstance(this)
         instanceWorkManager.beginUniqueWork(
-            NOTIFICATION_WORK,
+            notificationWork.id.toString(),
             androidx.work.ExistingWorkPolicy.APPEND, notificationWork
         ).enqueue()
+
+        uuidRecordatorio = notificationWork.id.toString()
+        val uuid = notificationWork.id.toString()
+        val database = FirebaseDatabase.getInstance()
+        val urlRecordatorios = uid+"/Recordatorios/"+key
+        val myRef =database.getReference(urlRecordatorios+"/uuidRecordatorio")
+        myRef.setValue(uuid)
+
     }
 
 }

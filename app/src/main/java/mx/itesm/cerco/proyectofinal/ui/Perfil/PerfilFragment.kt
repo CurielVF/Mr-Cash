@@ -18,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.WorkManager
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -64,10 +65,26 @@ class PerfilFragment : Fragment() {
 
     private fun configurarEventos() {
         binding.btnLogout.setOnClickListener{
-            mAuth.signOut()
-            AuthUI.getInstance().signOut(requireContext())
-            val intLogin = Intent(context, Login::class.java)
-            startActivity(intLogin)
+            val dialogBuilder = AlertDialog.Builder(context)
+
+            dialogBuilder.setMessage("¿Estás seguro de que quieres cerrar sesión?")
+                .setCancelable(false)
+                .setPositiveButton("Aceptar", DialogInterface.OnClickListener {
+                        dialog, id ->
+                    mAuth.signOut()
+                    AuthUI.getInstance().signOut(requireContext())
+                    val intLogin = Intent(context, Login::class.java)
+                    startActivity(intLogin)
+                })
+                // negative button text and action
+                .setNegativeButton("Cancelar", DialogInterface.OnClickListener {
+                        dialog, id -> dialog.cancel()
+                })
+            val alert = dialogBuilder.create()
+            alert.setTitle("Advertencia")
+            alert.show()
+
+
         }
 
         binding.btnBorrarDatos.setOnClickListener{
@@ -81,6 +98,9 @@ class PerfilFragment : Fragment() {
                         val database = FirebaseDatabase.getInstance()
                         val myRef =database.getReference(uid.toString())
                         myRef.removeValue()
+
+                        val instanceWorkManager = WorkManager.getInstance(requireContext())
+                        instanceWorkManager.cancelAllWorkByTag(uid!!)
                     })
                     // negative button text and action
                     .setNegativeButton("Cancelar", DialogInterface.OnClickListener {

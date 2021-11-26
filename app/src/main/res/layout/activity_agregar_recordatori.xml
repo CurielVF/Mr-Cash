@@ -81,6 +81,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
+                android:maxLength="20"
                 android:hint="Seleccionar nombre"/>
 
             <TextView
@@ -103,6 +104,7 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textAlignment="center"
+                android:maxLength="12"
                 android:hint="Seleccionar monto"
                 />
 
@@ -115,13 +117,13 @@
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-            
+
             <TimePicker
                 android:id="@+id/time_p"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/date_p"
-                android:timePickerMode="spinner"/>
+                android:timePickerMode="spinner" />
 
             <TextView
                 android:id="@+id/etFecha"
@@ -166,6 +168,18 @@
                     android:padding="20dp" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/cbMensual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Monto mensual" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnAgregarRecordatorio"
@@ -175,6 +189,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="80dp"
                 android:layout_marginBottom="22dp"
+                android:backgroundTint="#2F3E46"
                 android:text="Agregar" />
 
         </LinearLayout>
