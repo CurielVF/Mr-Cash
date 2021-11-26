@@ -5,25 +5,6 @@
       <map>
         <entry key="..\:/Este equipo/AndroidStudioProjects/Mr-Cash/app/src/main/res/layout/fragment_tips.xml" value="0.2907608695652174" />
         <entry key="..\:/Este equipo/AndroidStudioProjects/Mr-Cash/app/src/main/res/layout/renglon_tip.xml" value="0.2907608695652174" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/drawable/ic_outline_info.xml" value="0.134375" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/drawable/ic_tipo_comida.xml" value="0.18871794871794872" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/drawable/ic_tipo_educacion.xml" value="0.18871794871794872" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/drawable/ic_tipo_hogar.xml" value="0.18871794871794872" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/drawable/ic_tipo_otro.xml" value="0.18871794871794872" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/drawable/ic_tipo_salud.xml" value="0.18871794871794872" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/acerca_de_fragment.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/activity_agregar_meta.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/activity_agregar_recordatori.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/detalle_tip_fragment.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/fragment_detalle_meta.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/fragment_estadisticas.xml" value="0.22" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/fragment_inicio.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/fragment_metas.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/fragment_perfil.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/reglon_recordatorio.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/renglon_meta.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Mr. Cash/app/src/main/res/layout/renglon_tip.xml" value="0.1" />
-        <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/acerca_de_fragment.xml" value="0.22" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_agregar_meta.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_agregar_recordatori.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Victor CO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_login.xml" value="0.1" />
@@ -58,6 +39,10 @@
         <entry key="..\:/Users/YOLO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/reglon_recordatorio.xml" value="0.22" />
         <entry key="..\:/Users/YOLO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/renglo_recordatorio.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/YOLO/AndroidStudioProjects/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1796875" />
+        <entry key="..\:/Users/foule/OneDrive/Documentos/AndroidStudioProjects/Mr-Cash/app/src/main/res/layout/acerca_de_fragment.xml" value="0.33177083333333335" />
+        <entry key="..\:/Users/foule/OneDrive/Documentos/AndroidStudioProjects/Mr-Cash/app/src/main/res/layout/detalle_tip_fragment.xml" value="0.33177083333333335" />
+        <entry key="..\:/Users/foule/OneDrive/Documentos/AndroidStudioProjects/Mr-Cash/app/src/main/res/layout/fragment_perfil.xml" value="0.33177083333333335" />
+        <entry key="..\:/Users/foule/OneDrive/Documentos/AndroidStudioProjects/Mr-Cash/app/src/main/res/layout/fragment_tips.xml" value="0.33177083333333335" />
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Desarollo de aplicaciones moviles/Mr-Cash/app/src/main/res/layout/activity_agregar_meta.xml" value="0.290625" />
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Desarollo de aplicaciones moviles/Mr-Cash/app/src/main/res/layout/activity_agregar_recordatori.xml" value="0.290625" />
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Desarollo de aplicaciones moviles/Mr-Cash/app/src/main/res/layout/activity_login.xml" value="0.290625" />
@@ -76,6 +61,12 @@
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/activity_main.xml" value="0.2851851851851852" />
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_inicio.xml" value="0.2851851851851852" />
         <entry key="..\:/Users/howla/Documents/TEC/7 SEM/Proyecto-Final-Dispositivos-Moviles/app/src/main/res/layout/fragment_metas.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/acerca_de_fragment.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_agregar_meta.xml" value="0.1766304347826087" />
+        <entry key="app/src/main/res/layout/activity_agregar_recordatori.xml" value="0.17447916666666666" />
+        <entry key="app/src/main/res/layout/fragment_detalle_meta.xml" value="0.11879432624113476" />
+        <entry key="app/src/main/res/layout/fragment_metas.xml" value="0.1766304347826087" />
       </map>
     </option>
   </component>

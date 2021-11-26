@@ -24,8 +24,7 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
 import android.graphics.drawable.Drawable
-
-
+import java.math.BigDecimal
 
 
 class DetalleMetaFragment : Fragment() {
@@ -43,6 +42,7 @@ class DetalleMetaFragment : Fragment() {
     private var montoReal: Double = 0.0
     private var estadoMeta: String = "En progreso"
     private var colorEstado: String = Constantes.color_progreso
+    private val BIG_DECIMAL_LIMIT: Long = 999999999999
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,8 +58,8 @@ class DetalleMetaFragment : Fragment() {
         montoReal = args.meta.montoReal!!
         binding.tvNombreMetaDetalle.text=args.meta.nombre.toString()
         binding.tvFechaMetaDetalle.text=args.meta.fechaLimite.toString()
-        binding.tvMontoMetaDetalle.text="$"+String.format("%.2f",args.meta.precio)
-        binding.tvMontoRealMetaDetalle.text="$"+String.format("%.2f",montoReal)
+        binding.tvMontoMetaDetalle.text="$ "+String.format("%.2f",args.meta.precio?.toBigDecimal())
+        binding.tvMontoRealMetaDetalle.text="$ "+String.format("%.2f",montoReal.toBigDecimal())
         obtenerEstadoMeta()
 
         binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
@@ -116,7 +116,7 @@ class DetalleMetaFragment : Fragment() {
             binding.pbMeta.progress= (montoReal/args.meta.precio!!*100).toInt()
             obtenerEstadoMeta()
             myRef.setValue(montoReal)
-            binding.tvMontoRealMetaDetalle.text="$"+String.format("%.2f",montoReal)
+            binding.tvMontoRealMetaDetalle.text="$ "+String.format("%.2f",montoReal.toBigDecimal())
             binding.etAgregarMontoMeta.setText("")
             nuevoMonto = 0.0
         }
@@ -136,7 +136,11 @@ class DetalleMetaFragment : Fragment() {
         }
 
         nuevoMonto = nuevoMonto?.plus(saldo)
-        binding.etAgregarMontoMeta.setText(nuevoMonto.toString())
+        if(nuevoMonto?.toLong()!! > BIG_DECIMAL_LIMIT) {
+            nuevoMonto = BIG_DECIMAL_LIMIT.toDouble()
+        }
+
+        binding.etAgregarMontoMeta.setText(nuevoMonto?.toBigDecimal().toString())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

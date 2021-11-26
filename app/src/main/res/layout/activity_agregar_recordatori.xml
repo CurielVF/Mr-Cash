@@ -81,6 +81,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
+                android:maxLength="20"
                 android:hint="Seleccionar nombre"/>
 
             <TextView
@@ -103,6 +104,7 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textAlignment="center"
+                android:maxLength="12"
                 android:hint="Seleccionar monto"
                 />
 
