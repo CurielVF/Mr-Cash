@@ -59,6 +59,7 @@ class AgregarRecordatori : AppCompatActivity() {
         opcionTipo = binding.sORecordatorioTipo
         opcionTipo.adapter =
             ArrayAdapter<TipoRecordatorios>(this, R.layout.simple_list_item_1, opcionesRecordatorio)
+        binding.dateP.minDate = System.currentTimeMillis() - 1000;
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

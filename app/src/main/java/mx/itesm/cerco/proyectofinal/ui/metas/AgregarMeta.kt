@@ -21,6 +21,7 @@ import android.widget.*
 import mx.itesm.cerco.proyectofinal.DatePickerFragment
 import java.io.IOException
 import java.lang.Double
+import java.text.SimpleDateFormat
 
 
 class AgregarMeta : AppCompatActivity() {
@@ -58,23 +59,10 @@ class AgregarMeta : AppCompatActivity() {
     private fun configurarObservadores() {
         opcionTipo = binding.spOpcionTipo
         opcionTipo.adapter = ArrayAdapter<TiposMetas>(this, R.layout.simple_list_item_1, opcionesTipos)
-
-        binding.etFechaMeta.setOnClickListener{showDatePickerDialog()}
+        binding.dpFechaMeta.minDate = System.currentTimeMillis() - 1000;
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun showDatePickerDialog(){
-        val datePicker = DatePickerFragment{ dia, mes, año -> onDateSelected(dia,mes,año)}
 
-        datePicker.show(supportFragmentManager,"datapicker")
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun onDateSelected(dia: Int, mes:Int, año: Int){
-        binding.etFechaMeta?.setText("$dia/$mes/$año")
-        fecha = LocalDate.of(año,mes,dia)
-        binding.etFechaMeta.setError(null)
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun configurarEventos() {
@@ -113,14 +101,20 @@ class AgregarMeta : AppCompatActivity() {
         val myRef =database.getReference(uid+"/Metas/"+key)
 
         try {
+            val fechaCalendario = Calendar.getInstance()
+            fechaCalendario.set(
+                binding.dpFechaMeta.year, binding.dpFechaMeta.month, binding.dpFechaMeta.dayOfMonth
+            )
+            val format = SimpleDateFormat("yyyy-MM-dd")
+            val fechaLimite = format.format(fechaCalendario.time)
+
             val nombre = binding.etNombreMeta.text.toString()
             val monto = binding.etMontoMeta.text.toString().toDouble()
             val tipo = resultadoTipo
-            val fechaLimite=fecha.toString()
             val fechaCreacion=LocalDate.now().toString()
             // Crea un objeto alumno con los datos capturados
             val meta = Meta(nombre,fechaLimite,monto,tipo,null,null,fechaCreacion)
-            if (fecha==null || nombre.isBlank() || binding.etMontoMeta.text.toString().isBlank()){
+            if (fechaLimite==null || nombre.isBlank() || binding.etMontoMeta.text.toString().isBlank()){
                 throw IOException()
             }
 
@@ -135,9 +129,6 @@ class AgregarMeta : AppCompatActivity() {
             }
             if (binding.etNombreMeta.text.toString().isBlank()){
                 binding.etNombreMeta.setError("Nombre inválido")
-            }
-            if (fecha==null){
-                binding.etFechaMeta.setError("Fecha inválida")
             }
             Toast.makeText(baseContext,"Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
         }
