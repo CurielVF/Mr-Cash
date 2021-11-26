@@ -109,8 +109,9 @@ RecordatorioFragment : Fragment() {
                     val id = registro.key
                     recordatorios.add(Recordatorio(nombre,fechaLimite,precio,tipo,hora,id,uuid,frecuencia))
                 }
-
-                inicioViewModel.setRecordatorios(recordatorios)
+                val recordatoriosOrdenados = recordatorios
+                    .sortedWith( compareBy({ it.fechaPago }, { it.hora}) )
+                inicioViewModel.setRecordatorios(recordatoriosOrdenados)
             }
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")

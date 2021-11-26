@@ -154,7 +154,7 @@ class EstadisticasFragment : Fragment() {
                             datosEstadistica.clear()
                             val numbersMap = mutableMapOf<String, Double>()
                             for (registro in snapshot.children) {
-                                val monto = registro.child("precio").getValue(Double::class.java)
+                                val monto = registro.child("montoReal").getValue(Double::class.java)
                                 val tipo = registro.child("tipo").getValue(String::class.java)
                                 if (numbersMap.containsKey(tipo.toString())) {
                                     numbersMap[tipo.toString()] =
