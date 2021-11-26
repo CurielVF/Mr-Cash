@@ -117,6 +117,7 @@ class EstadisticasFragment : Fragment() {
             if(datosEstadistica.isNotEmpty()) {
                 try {
                     binding.tvNoDatos.visibility=View.INVISIBLE
+                    binding.flNoDatos.visibility=View.INVISIBLE
                     pie.data(datosEstadistica)
                     pie.title("Monto total por " + tipoEstadistica)
 
@@ -128,6 +129,7 @@ class EstadisticasFragment : Fragment() {
             }
             else{
                 binding.tvNoDatos.visibility=View.VISIBLE
+                binding.flNoDatos.visibility=View.VISIBLE
             }
             binding.pbEstadisticas.visibility=View.INVISIBLE
 
